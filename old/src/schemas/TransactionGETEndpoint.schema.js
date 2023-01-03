@@ -1,4 +1,5 @@
 import z from 'zod';
+
 import { TransactionEndpointSchema } from './transactionEndpoint.schema';
 
 export const TransactionGETEndpointSchema = z.object({

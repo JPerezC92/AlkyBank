@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { combineReducers,configureStore } from '@reduxjs/toolkit';
 import authReducer from 'src/features/auth/authSlice';
 import creditReducer from 'src/features/credit/creditSlice';
 import movementsReducer from 'src/features/movements/movementsSlice';
