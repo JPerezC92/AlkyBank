@@ -1,0 +1,8 @@
+import React from 'react';
+import clsx from 'clsx';
+#STYLE#
+type #NAME#Props = { className?:string};
+
+export const #NAME#: React.FC<#NAME#Props> = ({className, ...props}) => {
+    return <div className={clsx(className)} > </div>;
+};

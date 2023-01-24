@@ -29,11 +29,13 @@
 		"noUncheckedIndexedAccess": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["src/*"],
+			"@/Shared/*": ["src/modules/shared/*"],
 			"@/UI/*": ["src/modules/ui/*"],
-			"@/Auth/*": ["src/modules/auth/*"]
+			"@/Auth/*": ["src/modules/auth/*"],
+			"@/Test/*": ["__TESTS__/*"],
+			"@/*": ["src/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "old"]
 }

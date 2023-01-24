@@ -1,19 +1,47 @@
 import clsx from 'clsx';
 import React from 'react';
 
-type InputProps = React.ComponentProps<'input'>;
+const colorScheme = {
+	ghost: 'ghost',
+	primary: 'primary',
+	secondary: 'secondary',
+	accent: 'accent',
+	info: 'info',
+	success: 'success',
+	warning: 'warning',
+	error: 'error',
+} as const;
 
-export const Input: React.FC<InputProps> = ({ className, ...props }) => {
+type ColorScheme = (typeof colorScheme)[keyof typeof colorScheme];
+
+export type InputProps = {
+	isError?: boolean;
+	colorScheme?: ColorScheme;
+} & React.ComponentProps<'input'>;
+
+export const Input = React.forwardRef(function Input(
+	{ className, isError: error, colorScheme: _colorScheme, value, ...props },
+	ref,
+) {
 	return (
 		<>
 			<input
 				className={clsx(
-					'rounded border-2 border-primary px-2 py-1 text-base font-medium md:text-lg',
+					'input-bordered input input-sm md:input-md',
+					'rounded text-base font-medium transition-all duration-150 md:[&]:text-lg',
+					{
+						'input-primary': _colorScheme === colorScheme.primary,
+						'input-secondary': _colorScheme === colorScheme.secondary,
+						'input-accent': _colorScheme === colorScheme.accent,
+						'input-error': error,
+					},
 					className,
 				)}
 				type='text'
+				value={value}
 				{...props}
+				ref={ref}
 			/>
 		</>
 	);
-};
+}) as React.FC<InputProps>;

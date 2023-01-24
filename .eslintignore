@@ -3,5 +3,4 @@
 /.swc
 .gitignore
 /old
-/old2
 *.config.js
