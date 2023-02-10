@@ -1,9 +1,5 @@
-node_modules/
-dist/
-.prettierrc.js
-.eslintrc.js
-env.d.ts
-postcss.config.js
-jsconfig.json
-tailwind.config.js
-babel.config.js
+/node_modules
+/.next
+/.swc
+.gitignore
+*.config.js
