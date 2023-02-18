@@ -1,9 +1,10 @@
 import { extendTheme } from "@chakra-ui/react";
 
-import Button from "./components/Button";
+import Button from "@/shared/theme/components/Button";
 
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
+	bg1: "#ffffff",
 	primary: {
 		50: "#eee4ff",
 		100: "#cab4ff",
@@ -17,16 +18,28 @@ const colors = {
 		900: "#09001f",
 	},
 	secondary: {
-		50: "#d8fffa",
-		100: "#abfff1",
-		200: "#7bffe7",
-		300: "#48ffdd",
-		400: "#1affd4",
-		500: "#00e6ba",
-		600: "#00b391",
-		700: "#008068",
-		800: "#004e3d",
+		50: "#d9fffc",
+		100: "#adfff2",
+		200: "#7dffe9",
+		300: "#4dffe1",
+		400: "#25ffd8",
+		500: "#13e6bf",
+		600: "#00b394",
+		700: "#00806a",
+		800: "#004e40",
 		900: "#001c15",
+	},
+	danger: {
+		50: "#ffe4e4",
+		100: "#fdb8b8",
+		200: "#f58b8b",
+		300: "#ef5c5c",
+		400: "#e92f2f",
+		500: "#d01616",
+		600: "#a30f10",
+		700: "#74080a",
+		800: "#480304",
+		900: "#1f0000",
 	},
 	accent: {
 		50: "#fff2db",
@@ -47,6 +60,10 @@ export default extendTheme({
 	components: {
 		Button,
 	},
+	// fonts: {
+	// 	body: montserratAlternates.style.fontFamily,
+	// 	heading: texturina.style.fontFamily,
+	// },
 	styles: {
 		global: {
 			"html, body": { minHeight: "100vh" },

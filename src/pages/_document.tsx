@@ -4,14 +4,14 @@ import { Head, Html, Main, NextScript } from "next/document";
 import theme from "@/shared/theme";
 
 export default function Document() {
-  return (
-    <Html lang="en">
-      <Head />
-      <body>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
+	return (
+		<Html lang="en">
+			<Head />
+			<body>
+				<ColorModeScript initialColorMode={theme.config.initialColorMode} />
+				<Main />
+				<NextScript />
+			</body>
+		</Html>
+	);
 }

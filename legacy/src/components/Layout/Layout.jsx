@@ -1,7 +1,8 @@
 import { Footer } from 'src/components/Footer';
 import { Navbar } from 'src/components/Nav';
-import styles from './Layout.module.css';
 import { useComponentVisible } from 'src/hooks/useComponentVisible';
+
+import styles from './Layout.module.css';
 
 const Layout = ({ children }) => {
 	const { ref, isVisible, setIsVisible } = useComponentVisible(false);

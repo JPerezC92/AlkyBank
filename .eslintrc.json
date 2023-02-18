@@ -12,6 +12,12 @@
 		"simple-import-sort",
 		"@typescript-eslint/eslint-plugin"
 	],
+	"overrides": [
+		{
+			"files": ["__TESTS__/**"],
+			"rules": { "import/first": "off" }
+		}
+	],
 	"rules": {
 		"simple-import-sort/imports": "error",
 		"simple-import-sort/exports": "error",

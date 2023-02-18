@@ -1,0 +1,1 @@
+export { BackgroundWaves } from "./BackgroundWaves";
