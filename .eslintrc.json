@@ -1,17 +1,21 @@
 {
+	"root": true,
 	"extends": [
 		"standard",
 		"plugin:import/typescript",
 		"next/core-web-vitals",
 		"plugin:prettier/recommended",
+		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended"
 	],
 	"plugins": [
 		"prettier",
-		"import",
+		"@typescript-eslint",
+		"@typescript-eslint/eslint-plugin",
 		"simple-import-sort",
-		"@typescript-eslint/eslint-plugin"
+		"import"
 	],
+	"parser": "@typescript-eslint/parser",
 	"overrides": [
 		{
 			"files": ["__TESTS__/**"],
@@ -24,6 +28,7 @@
 		"import/first": "error",
 		"import/newline-after-import": "error",
 		"import/no-duplicates": "error",
-		"prettier/prettier": ["error", { "endOfLine": "auto" }]
+		"prettier/prettier": ["error", { "endOfLine": "auto" }],
+		"no-use-before-define": "off"
 	}
 }

@@ -52,7 +52,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 			router.push({ pathname: webRoutes.auth.login() });
 		},
 		onError: (e) => {
-			if (!isApiError(e)) return;
+			if (!isApiError(e)) return toastUtility.errorDefault();
 
 			toastUtility.error({ title: "Register failed", description: e.message });
 		},

@@ -3,15 +3,15 @@ import React from "react";
 
 import { AuthQueryKeys } from "@/auth/domain";
 import { AuthNestJSRepository, CookieRepository } from "@/auth/repos";
-import { authStore } from "@/auth/store";
+import { useAuthStore } from "@/auth/store";
 import { toastUtility } from "@/shared/utils";
 
 export const useRefreshTokenQuery = (config?: { enabled: boolean }) => {
 	const [isClient, setIsClient] = React.useState(false);
-	const authLoadingStart = authStore((s) => s.loadingStart);
+	const authLoadingStart = useAuthStore((s) => s.loadingStart);
 
-	const authLoadingFailed = authStore((s) => s.loadingFailed);
-	const saveAccessToken = authStore((s) => s.saveAccessToken);
+	const authLoadingFailed = useAuthStore((s) => s.loadingFailed);
+	const saveAccessToken = useAuthStore((s) => s.saveAccessToken);
 
 	React.useEffect(() => {
 		setIsClient(true);

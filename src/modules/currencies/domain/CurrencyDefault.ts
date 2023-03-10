@@ -1,0 +1,1 @@
+export const currencyDefault = "ARS";

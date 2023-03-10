@@ -2,15 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 
 import { AuthQueryKeys } from "@/auth/domain";
 import { AuthNestJSRepository } from "@/auth/repos";
-import { authStore } from "@/auth/store";
+import { useAuthStore } from "@/auth/store";
 import { toastUtility } from "@/shared/utils";
 
 export function useUserInfoQuery(config?: { enabled: boolean }) {
-	const accessToken = authStore((s) => s.accessToken);
-	const authLoadingSucceeded = authStore((s) => s.loadingSucceeded);
-	const authLoadingStart = authStore((s) => s.loadingStart);
-	const authLoadingFailed = authStore((s) => s.loadingFailed);
-	const saveUser = authStore((s) => s.saveUser);
+	const accessToken = useAuthStore((s) => s.accessToken);
+	const authLoadingSucceeded = useAuthStore((s) => s.loadingSucceeded);
+	const authLoadingStart = useAuthStore((s) => s.loadingStart);
+	const authLoadingFailed = useAuthStore((s) => s.loadingFailed);
+	const saveUser = useAuthStore((s) => s.saveUser);
 
 	return useQuery(
 		[AuthQueryKeys.userInfo()],

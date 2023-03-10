@@ -7,7 +7,7 @@ const BackgroundStyled = styled(Image)({ objectFit: "cover", opacity: "0.1" });
 
 export const BackgroundWaves: React.FC = () => {
 	return (
-		<Box position="absolute" w="full" h="full" zIndex="-1">
+		<Box position="fixed" w="full" h="full" zIndex="-1" top="0">
 			<BackgroundStyled src="/bg1.svg" alt="background" fill priority />
 		</Box>
 	);

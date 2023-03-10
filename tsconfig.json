@@ -16,6 +16,9 @@
 		"incremental": true,
 		"baseUrl": ".",
 		"paths": {
+			"@/currencies/*": ["src/modules/currencies/*"],
+			"@/movements/*": ["src/modules/movements/*"],
+			"@/accounts/*": ["src/modules/accounts/*"],
 			"@/users/*": ["src/modules/users/*"],
 			"@/auth/*": ["src/modules/auth/*"],
 			"@/shared/*": ["src/modules/shared/*"],

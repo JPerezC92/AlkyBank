@@ -12,7 +12,7 @@ import Link from "next/link";
 
 import { AuthNestJSRepository, AuthRepository } from "@/auth/repos";
 import { Credentials } from "@/auth/schemas";
-import { authStore } from "@/auth/store";
+import { useAuthStore } from "@/auth/store";
 import { FormButtonDivider } from "@/shared/components";
 import { useForm } from "@/shared/hooks";
 import { isApiError, toastUtility, webRoutes } from "@/shared/utils";
@@ -25,8 +25,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	authRepository = AuthNestJSRepository(),
 	...props
 }) => {
-	const saveAccessToken = authStore((s) => s.saveAccessToken);
-	const authLoadingStart = authStore((s) => s.loadingStart);
+	const saveAccessToken = useAuthStore((s) => s.saveAccessToken);
+	const authLoadingStart = useAuthStore((s) => s.loadingStart);
 
 	const submit = useMutation({
 		mutationFn: async (credentials: Credentials) => {
@@ -37,7 +37,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 			authLoadingStart();
 		},
 		onError: (e) => {
-			if (!isApiError(e)) return;
+			if (!isApiError(e)) return toastUtility.errorDefault();
+
 			toastUtility.error({
 				title: "Authentication failed",
 				description: e.message,

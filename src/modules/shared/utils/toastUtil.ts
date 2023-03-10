@@ -22,6 +22,14 @@ export const toastUtility = {
 			...config,
 		});
 	},
+	errorDefault(config?: ConfigWithoutStatus) {
+		this.toast({
+			...config,
+			status: "error",
+			title: "Unknown Error",
+			description: "Try again later",
+		});
+	},
 	error(config?: ConfigWithoutStatus) {
 		this.toast({ ...config, status: "error" });
 	},

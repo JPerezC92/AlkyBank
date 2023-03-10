@@ -3,7 +3,11 @@ import React from "react";
 export function useForm<T>(form: T, onSubmit?: (values: T) => void) {
 	const [values, setValues] = React.useState(form);
 
-	function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+	function onChange(
+		e: React.ChangeEvent<
+			HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+		>
+	) {
 		const { name, value } = e.target;
 
 		setValues((prevState) => ({ ...prevState, [name]: value }));

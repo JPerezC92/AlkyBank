@@ -3,7 +3,7 @@ import React from "react";
 
 import { useRefreshTokenQuery, useUserInfoQuery } from "@/auth/hooks";
 import { AuthRepository, CookieRepository } from "@/auth/repos";
-import { authStore } from "@/auth/store";
+import { useAuthStore } from "@/auth/store";
 import { SpinnerHide, SpinnerShow } from "@/shared/components";
 import { MyRepo } from "@/shared/repos";
 
@@ -14,9 +14,9 @@ type AuthLayoutProps = {
 };
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
-	const isAuthenticated = authStore((s) => s.isAuthenticated);
-	const authLoadingStatus = authStore((s) => s.loadingStatus);
-	const accessToken = authStore((s) => s.accessToken);
+	const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+	const authLoadingStatus = useAuthStore((s) => s.loadingStatus);
+	const accessToken = useAuthStore((s) => s.accessToken);
 
 	const refreshTokenQuery = useRefreshTokenQuery({
 		enabled: authLoadingStatus === "idle" && !isAuthenticated && !accessToken,

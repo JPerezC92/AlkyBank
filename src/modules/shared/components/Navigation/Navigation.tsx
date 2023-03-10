@@ -1,7 +1,6 @@
 import {
 	Box,
 	Divider,
-	Heading,
 	IconButton,
 	Link,
 	List,
@@ -13,10 +12,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import { FaHamburger } from "react-icons/fa";
 
+import { AlkybankLogo } from "@/shared/SVG/AlkybankLogo";
 import { webRoutes } from "@/shared/utils";
 
 const navList = [
-	{ name: "Deposits", route: webRoutes.deposits() },
+	{ name: "Charges", route: webRoutes.charges() },
 	{ name: "Payments", route: webRoutes.payments() },
 	{ name: "Balance", route: webRoutes.balance() },
 	{ name: "Movements", route: webRoutes.movements() },
@@ -25,7 +25,7 @@ const navList = [
 type NavState = "active" | "collapsed";
 
 export const Navigation: React.FC = () => {
-	const router = useRouter();
+	const asPath = useRouter().asPath.slice(1) || " ";
 
 	const [navState, onToggleNavState] = React.useState<NavState>("collapsed");
 
@@ -34,85 +34,88 @@ export const Navigation: React.FC = () => {
 	}
 
 	return (
-		<Box
-			as="header"
-			bg="primary.500"
-			display="flex"
-			flexDirection={{ base: "column", md: "row" }}
-			p="3.5"
-		>
-			<Box display="flex">
-				<Heading color="primary.50" as="span" size="xl">
-					Alkybank
-				</Heading>
-
-				<IconButton
-					display={{ base: "block", md: "none" }}
-					marginInlineStart="auto"
-					aria-label="menu button"
-					icon={<FaHamburger size={30} />}
-					onClick={_onToggleNavState}
-					variant="link"
-					colorScheme="secondary"
-				/>
-			</Box>
-
+		<Box bg="primary.500">
 			<Box
-				as={motion.div}
-				animate={navState}
-				display={{ base: "none", md: "contents !important" }}
-				initial={{ display: "none" }}
-				variants={{
-					active: {
-						display: "block",
-						opacity: 1,
-						height: "auto",
-					},
-					collapsed: {
-						overflow: "hidden",
-						opacity: 0,
-						height: 0,
-						transitionEnd: { display: "none" },
-					},
-				}}
+				as="header"
+				margin="auto"
+				maxW="container.xl"
+				display="flex"
+				flexDirection={{ base: "column", md: "row" }}
+				p="4"
+				paddingInline={{ xl: "0" }}
 			>
-				<Divider
-					borderColor="secondary.500"
-					marginBlock="2"
-					display={{ base: "block", md: "none" }}
-				/>
+				<Box display="flex">
+					<Box position="relative" maxW="52" color="primary.50">
+						<AlkybankLogo />
+					</Box>
+
+					<IconButton
+						display={{ base: "block", md: "none" }}
+						marginInlineStart="auto"
+						aria-label="menu button"
+						icon={<FaHamburger size={30} />}
+						onClick={_onToggleNavState}
+						variant="link"
+						colorScheme="secondary"
+					/>
+				</Box>
 
 				<Box
-					as="nav"
-					marginInlineStart={{ base: "0", md: "auto" }}
-					marginBlock="auto"
+					as={motion.div}
+					animate={navState}
+					display={{ base: "none", md: "contents !important" }}
+					initial={{ display: "none" }}
+					variants={{
+						active: {
+							display: "block",
+							opacity: 1,
+							height: "auto",
+						},
+						collapsed: {
+							overflow: "hidden",
+							opacity: 0,
+							height: 0,
+							transitionEnd: { display: "none" },
+						},
+					}}
 				>
-					<List
-						display={{ base: "grid", md: "flex" }}
-						gap={{ base: "5", md: "2" }}
-						gridTemplateColumns="repeat(auto-fit, minmax(min(100%,15rem),1fr))"
+					<Divider
+						borderColor="secondary.500"
+						marginBlock="2"
+						display={{ base: "block", md: "none" }}
+					/>
+
+					<Box
+						as="nav"
+						marginInlineStart={{ base: "0", md: "auto" }}
+						marginBlock="auto"
 					>
-						{navList.map((link) => (
-							<ListItem
-								data-active={link.route.includes(router.asPath)}
-								key={link.name}
-								textAlign="center"
-								py="1"
-								borderRadius="base"
-								transition="all 0.2s ease-in-out"
-								px="4"
-								color="primary.50"
-								sx={{ "&:hover,&[data-active=true] ": { bg: "primary.600" } }}
-							>
-								<Link as={NextLink} href={link.route} display="block">
-									{link.name}
-								</Link>
-							</ListItem>
-						))}
-					</List>
+						<List
+							display={{ base: "grid", md: "flex" }}
+							gap={{ base: "5", md: "2" }}
+							gridTemplateColumns="repeat(auto-fit, minmax(min(100%,15rem),1fr))"
+						>
+							{navList.map((link) => (
+								<ListItem
+									data-active={link.route.includes(asPath)}
+									key={link.name}
+									textAlign="center"
+									py="1"
+									borderRadius="base"
+									transition="all 0.2s ease-in-out"
+									px="4"
+									color="primary.50"
+									sx={{ "&:hover,&[data-active=true] ": { bg: "primary.600" } }}
+								>
+									<Link as={NextLink} href={link.route} display="block">
+										{link.name}
+									</Link>
+								</ListItem>
+							))}
+						</List>
+					</Box>
 				</Box>
 			</Box>
 		</Box>
-		// </Box>
 	);
 };

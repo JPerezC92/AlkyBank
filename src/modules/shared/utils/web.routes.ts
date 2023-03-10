@@ -17,7 +17,7 @@ const auth = {
 export const webRoutes = {
 	baseRoute,
 	auth,
-	deposits: () => baseRoute + "/deposits",
+	charges: () => baseRoute + "/charges",
 	payments: () => baseRoute + "/payments",
 	balance: () => baseRoute + "/balance",
 	movements: () => baseRoute + "/movements",

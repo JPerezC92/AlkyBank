@@ -1,27 +1,36 @@
+import { Box, Spinner } from "@chakra-ui/react";
 import React from "react";
 
+import { useAuthStore } from "@/auth/store";
 import { useSpinnerStore } from "@/shared/store";
 
 export const SpinnerGlobal: React.FC = () => {
 	const isActive = useSpinnerStore((s) => s.isLoading);
+	const user = useAuthStore((s) => s.user);
 
 	if (!isActive) return null;
 
 	return (
 		<>
-			{/* <Box
-				position="absolute"
-				bgColor="primary.100"
-				opacity="0.5"
+			<Box
+				position="fixed"
 				width="full"
-				h="full"
+				height="full"
+				maxWidth="100vw"
+				maxHeight="100vh"
 				display="flex"
 				pointerEvents="none"
-			/> */}
-
-			{/* <Box position="absolute" width="full" h="full" display="flex">
-				<Spinner margin="auto" />
-			</Box> */}
+				_before={{
+					width: "100%",
+					height: "100%",
+					opacity: !user ? "1" : "0.2",
+					position: "absolute",
+					bgColor: !user ? "bg1" : "primary.800",
+					content: '""',
+				}}
+			>
+				<Spinner margin="auto" position="relative" />
+			</Box>
 		</>
 	);
 };

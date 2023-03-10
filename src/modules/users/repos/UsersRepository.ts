@@ -1,6 +1,5 @@
-import { UserCreate } from "@/users/schemas/UserCreate.schema";
-import { User } from "@/users/schemas/UserEndpoint.schema";
+import { UserCreate, UserEndpoint } from "@/users/schemas";
 
 export interface UsersRepository {
-	create(user: UserCreate, abortSignal?: AbortSignal): Promise<User>;
+	create(user: UserCreate, abortSignal?: AbortSignal): Promise<UserEndpoint>;
 }

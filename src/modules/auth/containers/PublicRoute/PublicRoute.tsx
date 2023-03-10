@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
-import { authStore } from "@/auth/store";
+import { useAuthStore } from "@/auth/store";
 import { BackgroundWaves } from "@/shared/components/BackgroundWaves";
 import { Redirect } from "@/shared/components/Redirect";
 import { webRoutes } from "@/shared/utils";
@@ -11,7 +11,7 @@ type PublicRouteProps = {
 };
 
 export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
-	const authLoadingStatus = authStore((s) => s.loadingStatus);
+	const authLoadingStatus = useAuthStore((s) => s.loadingStatus);
 
 	if (authLoadingStatus === "succeeded") {
 		return <Redirect to={webRoutes.baseRoute} />;

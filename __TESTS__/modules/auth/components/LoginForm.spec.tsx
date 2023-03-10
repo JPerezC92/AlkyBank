@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { LoginForm } from "@/auth/components";
 import { Credentials } from "@/auth/schemas";
-import { authStore } from "@/auth/store";
+import { useAuthStore } from "@/auth/store";
 import { AuthMockRepository } from "@/tests/modules/auth/repos";
 import { ApiErrorMock } from "@/tests/modules/shared/domain";
 import { AppWrapperProvider } from "@/tests/utils";
@@ -12,10 +12,10 @@ const credentials: Credentials = {
 	password: "123456aA-",
 };
 
-const initialStoreState = authStore.getState();
+const initialStoreState = useAuthStore.getState();
 describe("<LoginForm />", () => {
 	beforeEach(() => {
-		authStore.setState(initialStoreState, true);
+		useAuthStore.setState(initialStoreState, true);
 	});
 
 	test("should login successfully ", async () => {
@@ -35,7 +35,7 @@ describe("<LoginForm />", () => {
 		fireEvent.click(submitButton);
 
 		await waitFor(() =>
-			expect(authStore.getState().loadingStatus).toBe("loading")
+			expect(useAuthStore.getState().loadingStatus).toBe("loading")
 		);
 	});
 
@@ -66,7 +66,7 @@ describe("<LoginForm />", () => {
 		).toBeInTheDocument();
 
 		await waitFor(() =>
-			expect(authStore.getState().loadingStatus).toBe("idle")
+			expect(useAuthStore.getState().loadingStatus).toBe("idle")
 		);
 	});
 });
