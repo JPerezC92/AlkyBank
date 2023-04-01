@@ -2,6 +2,8 @@ import { extendTheme } from "@chakra-ui/react";
 
 import Button from "@/shared/theme/components/Button";
 
+import { fontsConfig } from "./fontsConfig";
+
 // 2. Extend the theme to include custom colors, fonts, etc
 const colors = {
 	bg1: "#ffffff",
@@ -84,16 +86,17 @@ export default extendTheme({
 	components: {
 		Button,
 	},
-	// fonts: {
-	// 	body: montserratAlternates.style.fontFamily,
-	// 	heading: texturina.style.fontFamily,
-	// },
+	fonts: {
+		body: fontsConfig.montserratAlternates,
+		heading: fontsConfig.texturina,
+	},
 	styles: {
 		global: {
-			"html, body": { minHeight: "100vh" },
-			"#__next": {
-				display: "grid",
-				minHeight: "100vh",
+			"html, body, #__next": {
+				minHeight: "100%",
+				display: "flex",
+				flexDirection: "column",
+				flex: "1 0 auto",
 			},
 		},
 	},

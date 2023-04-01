@@ -11,13 +11,11 @@ type AppLayoutProps = {
 
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 	return (
-		<Box display="grid" gridTemplateRows="auto 1fr auto" minH="full">
+		<Box display="flex" flexDirection="column" flex="1">
 			<BackgroundWaves />
 
 			<Navigation />
-
 			{children}
-
 			<Footer />
 		</Box>
 	);

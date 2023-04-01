@@ -98,7 +98,7 @@ export function MovementForm<
 				<Textarea
 					borderColor="primary.100"
 					focusBorderColor="primary.500"
-					placeholder="Here is a sample placeholder"
+					placeholder="Write a concept for this movement"
 					resize="vertical"
 					onChange={onChange}
 					value={values.concept}

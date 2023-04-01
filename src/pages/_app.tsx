@@ -1,3 +1,4 @@
+import "@/shared/theme/fonts";
 import "@/shared/utils/timeAgo";
 
 import { ChakraProvider } from "@chakra-ui/react";

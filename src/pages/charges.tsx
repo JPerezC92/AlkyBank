@@ -8,32 +8,42 @@ import { ChargeMoney } from "@/shared/SVG/ChargeMoney";
 const ChargesPage = () => {
 	return (
 		<PrivateLayout>
-			<PrivateContainer paddingX={{ base: "4", xl: 0 }} as="main">
+			<PrivateContainer
+				as="main"
+				display="flex"
+				flex="1"
+				flexDirection="column"
+			>
 				<PageHeading>Charges</PageHeading>
 
 				<Box
-					display="grid"
-					gridTemplateColumns={{ base: "1fr", md: "1fr auto 1fr" }}
+					display="flex"
+					flexDirection={{ base: "column", md: "row" }}
+					flex="1"
 					gap="5"
 				>
-					<Box>
+					<Box flex="1" display="flex" flexDirection="column">
 						<QuickCharge
 							quickChargeList={[100, 200, 300, 400, 500, 1000, 1500, 2000]}
 						/>
 
-						<Box display={{ base: "none", md: "block" }} mt="16">
+						<Box display={{ base: "none", md: "block" }} mt="28">
 							<ChargeMoney maxH={{ md: "72", xl: "80" }} />
 						</Box>
 					</Box>
 
-					<Divider
-						my={{ base: "4", md: 0 }}
-						borderColor="primary.100"
-						height={{ md: "100%" }}
-						borderInlineStartWidth={{ md: "1px" }}
-					/>
+					<Box>
+						<Divider
+							my={{ base: "4", md: 0 }}
+							borderColor="primary.100"
+							height={{ md: "100%" }}
+							borderInlineStartWidth={{ md: "1px" }}
+						/>
+					</Box>
 
-					<MovementFormCreateTopup />
+					<Box flex="1" marginBlock="auto">
+						<MovementFormCreateTopup marginInline="auto" />
+					</Box>
 				</Box>
 			</PrivateContainer>
 		</PrivateLayout>

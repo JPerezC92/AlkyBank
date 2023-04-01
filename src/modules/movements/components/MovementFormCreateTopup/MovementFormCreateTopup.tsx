@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, ChakraComponent, Heading } from "@chakra-ui/react";
 import React from "react";
 
 import { MovementForm } from "@/movements/components";
@@ -10,11 +10,11 @@ import {
 
 type MovementFormCreateTopupProps = {
 	movementsRepository?: MovementsRepository;
-};
+} & Parameters<ChakraComponent<"div">>[0];
 
 export const MovementFormCreateTopup: React.FC<
 	MovementFormCreateTopupProps
-> = ({ movementsRepository = MovementsNestJSRepository() }) => {
+> = ({ movementsRepository = MovementsNestJSRepository(), ...props }) => {
 	const movementCreateTopupMut = useMovementCreateTopupMut(movementsRepository);
 
 	return (
@@ -27,7 +27,6 @@ export const MovementFormCreateTopup: React.FC<
 			display="flex"
 			flexDirection="column"
 			gap="5"
-			margin={{ md: "auto" }}
 			maxW={{ md: "sm" }}
 			padding="4"
 			shadow="2xl"
@@ -40,6 +39,7 @@ export const MovementFormCreateTopup: React.FC<
 				content: '""',
 				opacity: "0.6",
 			}}
+			{...props}
 		>
 			<Heading as="h2" textAlign="center" size="xl" position="relative">
 				Custom Charge

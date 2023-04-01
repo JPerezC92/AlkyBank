@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import React from "react";
 
 import { useAuthStore } from "@/auth/store";
@@ -18,9 +17,9 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
 	}
 
 	return (
-		<Box height="100%">
+		<>
 			<BackgroundWaves />
 			{children}
-		</Box>
+		</>
 	);
 };

@@ -12,6 +12,7 @@ const LoginPage: NextPage = () => {
 			<PublicRoute>
 				<Box
 					as="main"
+					flex="1"
 					height="100%"
 					display="flex"
 					flexDirection="column"

@@ -1,4 +1,3 @@
-import { Box } from "@chakra-ui/react";
 import React from "react";
 
 import { useRefreshTokenQuery, useUserInfoQuery } from "@/auth/hooks";
@@ -34,10 +33,10 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
 		refreshTokenQuery.fetchStatus !== "idle";
 
 	return (
-		<Box>
+		<>
 			{isActiveSpinner ? <SpinnerShow /> : <SpinnerHide />}
 
 			{children}
-		</Box>
+		</>
 	);
 };

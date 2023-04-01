@@ -12,6 +12,7 @@ const RegisterPage: NextPage = () => {
 				as="main"
 				height="100%"
 				display="flex"
+				flex="1"
 				flexDirection="column"
 				paddingBlock="8"
 				paddingInline="4"
