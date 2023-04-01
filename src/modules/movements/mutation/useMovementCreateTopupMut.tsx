@@ -5,7 +5,7 @@ import { useAuthStore } from "@/auth/store";
 import { MovementsRepository } from "@/movements/repos";
 import {
 	MovementCreateTopup,
-	MovementEndpointTopup,
+	MovementTopupEndpoint,
 } from "@/movements/schemas";
 import { isApiError, toastUtility } from "@/shared/utils";
 
@@ -16,7 +16,7 @@ export function useMovementCreateTopupMut(
 
 	return useMutation(
 		async (movementCreateTopup: MovementCreateTopup) => {
-			const movementEndpointTopup: MovementEndpointTopup =
+			const movementEndpointTopup: MovementTopupEndpoint =
 				await movementsRepository.create(movementCreateTopup, accessToken);
 
 			return movementEndpointTopup;

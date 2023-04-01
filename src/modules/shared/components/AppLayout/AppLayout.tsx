@@ -13,6 +13,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 	return (
 		<Box display="grid" gridTemplateRows="auto 1fr auto" minH="full">
 			<BackgroundWaves />
+
 			<Navigation />
 
 			{children}

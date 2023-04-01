@@ -45,9 +45,11 @@ export const Navigation: React.FC = () => {
 				paddingInline={{ xl: "0" }}
 			>
 				<Box display="flex">
-					<Box position="relative" maxW="52" color="primary.50">
-						<AlkybankLogo />
-					</Box>
+					<Link as={NextLink} href={webRoutes.baseRoute}>
+						<Box position="relative" maxW="52" color="primary.50">
+							<AlkybankLogo />
+						</Box>
+					</Link>
 
 					<IconButton
 						display={{ base: "block", md: "none" }}

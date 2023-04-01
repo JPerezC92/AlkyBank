@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import * as crypto from "crypto";
 
 import { QuickCharge } from "@/movements/components";
-import { MovementEndpointTopup } from "@/movements/schemas";
+import { MovementTopupEndpoint } from "@/movements/schemas";
 import { ApiError } from "@/shared/schemas";
 import { MovementsMockRepository } from "@/tests/modules/movements/repos";
 import { AppWrapperProvider } from "@/tests/utils";
@@ -11,7 +11,7 @@ const quickChargeList = [100, 200];
 
 describe("<QuickCharge />", () => {
 	test("should create a new TOPUP movement successfylly", async () => {
-		const movementEndpointTopupMock: MovementEndpointTopup = {
+		const movementEndpointTopupMock: MovementTopupEndpoint = {
 			id: crypto.randomUUID(),
 			accountId: "",
 			amount: 200,

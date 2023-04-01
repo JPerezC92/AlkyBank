@@ -1,22 +1,15 @@
-import { Box, Divider, Heading } from "@chakra-ui/react";
+import { Box, Divider } from "@chakra-ui/react";
 
 import { PrivateLayout } from "@/auth/components";
 import { MovementFormCreateTopup, QuickCharge } from "@/movements/components";
-import { PrivateContainer } from "@/shared/components";
+import { PageHeading, PrivateContainer } from "@/shared/components";
 import { ChargeMoney } from "@/shared/SVG/ChargeMoney";
 
 const ChargesPage = () => {
 	return (
 		<PrivateLayout>
 			<PrivateContainer paddingX={{ base: "4", xl: 0 }} as="main">
-				<Heading
-					size="4xl"
-					color="primary.700"
-					textTransform="uppercase"
-					marginBlockEnd="8"
-				>
-					Charges
-				</Heading>
+				<PageHeading>Charges</PageHeading>
 
 				<Box
 					display="grid"

@@ -1,10 +1,28 @@
+import {
+	Box,
+	FormControl,
+	FormLabel,
+	Heading,
+	List,
+	ListItem,
+	Select,
+	Skeleton,
+} from "@chakra-ui/react";
 import Head from "next/head";
+import Image from "next/image";
 
 import { AuthLayout } from "@/auth/containers";
 import { PrivateRoute } from "@/auth/containers/PrivateRoute";
-import { AppLayout } from "@/shared/components/AppLayout";
+import { useAuthStore } from "@/auth/store";
+import { MovementPreviewCard } from "@/movements/components";
+import { MovementList } from "@/movements/containers";
+import { AppLayout, PageHeading, PrivateContainer } from "@/shared/components";
+import { InfoBox } from "@/shared/components/InfoBox";
+import { forInRange } from "@/shared/utils";
 
 export default function Home() {
+	const accountList = useAuthStore((s) => s.user?.accountList);
+
 	return (
 		<AuthLayout>
 			<PrivateRoute>
@@ -16,9 +34,77 @@ export default function Home() {
 				</Head>
 
 				<AppLayout>
-					<main>
-						<div>Home</div>
-					</main>
+					<PrivateContainer
+						as="main"
+						paddingX={{ base: "4", xl: 0 }}
+						display="flex"
+						flexDirection="column"
+						minH="xl"
+					>
+						<PageHeading textAlign="center">Welcome to Alkybank</PageHeading>
+
+						<Box
+							display={{ md: "grid" }}
+							gridTemplateColumns="1fr 1fr"
+							marginBlock="auto"
+						>
+							<Box
+								alignSelf="center"
+								display={{ base: "none", md: "block" }}
+								position="relative"
+								h="sm"
+							>
+								<Image src="/home-img.svg" fill alt="" />
+							</Box>
+
+							<Box>
+								<FormControl mb="4">
+									<FormLabel>Select an account</FormLabel>
+									<Select disabled={!!accountList?.length} variant="filled">
+										{accountList?.map((account) => (
+											<option key={account.id}>
+												{account.currency} - {account.id}
+											</option>
+										))}
+									</Select>
+								</FormControl>
+
+								<Heading mb="4" color="secondary.600">
+									Latest movements
+								</Heading>
+
+								<List
+									maxHeight={{ md: "45vh" }}
+									overflowY="auto"
+									display="grid"
+									paddingBlock="4"
+									gridTemplateColumns="repeat(auto-fit, minmax(min(100%,22rem),1fr))"
+									gap="4"
+								>
+									<MovementList>
+										{(rp) =>
+											rp.loading ? (
+												forInRange(10).map((v, index) => (
+													<Skeleton key={index} height="16" />
+												))
+											) : rp.movementList.length === 0 ? (
+												<InfoBox
+													minH="xs"
+													message="You don't have any movements yet."
+												/>
+											) : (
+												rp.movementList.map((movement) => (
+													<ListItem key={movement.id}>
+														<MovementPreviewCard movement={movement} />
+													</ListItem>
+												))
+											)
+										}
+									</MovementList>
+								</List>
+							</Box>
+						</Box>
+					</PrivateContainer>
 				</AppLayout>
 			</PrivateRoute>
 		</AuthLayout>

@@ -5,7 +5,7 @@ export function QueryClientWrapperProvider(): React.FC<{
 }> {
 	const queryClient = new QueryClient({
 		logger: { log: () => ({}), warn: () => ({}), error: () => ({}) },
-		defaultOptions: { mutations: {} },
+		defaultOptions: { mutations: {}, queries: { retry: false } },
 	});
 
 	return function QueryClientWrapperComp({ children }) {

@@ -5,6 +5,7 @@ import { MovementType } from "@/movements/domain";
 const MovementEndpointBase = z.object({
 	id: z.string().uuid(),
 	amount: z.number(),
+	currency: z.string(),
 	date: z
 		.string()
 		.datetime()
@@ -41,7 +42,18 @@ export const MovementEndpoint = z.discriminatedUnion("type", [
 ]);
 
 export type MovementEndpoint = z.infer<typeof MovementEndpoint>;
-export type MovementEndpointTopup = Extract<
+
+export type MovementTopupEndpoint = Extract<
 	MovementEndpoint,
 	{ type: "TOPUP" }
+>;
+
+export type MovementPaymentEndpoint = Extract<
+	MovementEndpoint,
+	{ type: "PAYMENT" }
+>;
+
+export type MovementTransferenceEndpoint = Extract<
+	MovementEndpoint,
+	{ type: "TRANSFERENCE" }
 >;
