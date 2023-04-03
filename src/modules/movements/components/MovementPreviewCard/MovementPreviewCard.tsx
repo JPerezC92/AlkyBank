@@ -31,7 +31,7 @@ export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
 				{movement.type === "TOPUP" ? (
 					<Icon
 						as={FaArrowUp}
-						bg="success.500"
+						bg="success.300"
 						borderRadius="full"
 						fontSize="5xl"
 						padding="2"
@@ -40,7 +40,7 @@ export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
 				) : (
 					<Icon
 						as={FaArrowDown}
-						bg="danger.500"
+						bg="danger.300"
 						borderRadius="full"
 						fontSize="5xl"
 						padding="2"
@@ -59,7 +59,7 @@ export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
 				</Text>
 
 				<Text as="b">
-					{movement.amount} {movement.currency}
+					{movement.currency} {movement.amount}
 				</Text>
 			</Box>
 		</Box>

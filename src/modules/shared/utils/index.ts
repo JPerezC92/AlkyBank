@@ -5,4 +5,5 @@ export * from "./httpVerb";
 export * from "./isApiError";
 export * from "./timeAgo";
 export * from "./toastUtil";
+export * from "./toStringValues";
 export * from "./web.routes";

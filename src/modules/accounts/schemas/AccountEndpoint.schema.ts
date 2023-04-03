@@ -2,7 +2,9 @@ import { z } from "zod";
 
 export const AccountEndpoint = z.object({
 	id: z.string().uuid(),
-	money: z.number().min(0),
+	balance: z.number().min(0),
+	income: z.number().min(0),
+	expense: z.number().min(0),
 	userId: z.string().uuid(),
 	currency: z.string(),
 	createdAt: z

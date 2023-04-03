@@ -1,7 +1,7 @@
 import { chakra, ChakraProps } from "@chakra-ui/react";
 import React from "react";
 
-export const ChargeMoney: React.FC<ChakraProps> = (props) => {
+export const ChargeMoneySvg: React.FC<ChakraProps> = (props) => {
 	return (
 		<chakra.svg
 			{...props}

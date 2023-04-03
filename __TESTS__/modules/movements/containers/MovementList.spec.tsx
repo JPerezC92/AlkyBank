@@ -4,7 +4,6 @@ import { useAccountStore } from "@/accounts/store";
 import { useAuthStore } from "@/auth/store";
 import { MovementPreviewCard } from "@/movements/components";
 import { MovementList } from "@/movements/containers";
-import { ApiError } from "@/shared/schemas";
 import { AccountMock } from "@/tests/modules/accounts/fixtures";
 import { MovementsMockRepository } from "@/tests/modules/movements/repos";
 import { AppWrapperProvider } from "@/tests/utils";

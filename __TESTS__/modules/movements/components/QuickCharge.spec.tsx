@@ -3,7 +3,6 @@ import * as crypto from "crypto";
 
 import { QuickCharge } from "@/movements/components";
 import { MovementTopupEndpoint } from "@/movements/schemas";
-import { ApiError } from "@/shared/schemas";
 import { MovementsMockRepository } from "@/tests/modules/movements/repos";
 import { AppWrapperProvider } from "@/tests/utils";
 
@@ -18,6 +17,7 @@ describe("<QuickCharge />", () => {
 			concept: "Test",
 			createdAt: new Date(),
 			date: new Date(),
+			currency: "EUR",
 			type: "TOPUP",
 			updatedAt: new Date(),
 		};

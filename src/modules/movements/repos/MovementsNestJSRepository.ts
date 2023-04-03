@@ -16,8 +16,8 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 	const baseApiUrl = EnvVariables.api + "/movements";
 
 	return {
-		create: async <T extends MovementCreate>(
-			movement: T,
+		create: async (
+			movement: MovementCreate,
 			accessToken: Tokens["accessToken"],
 			localSignal?: AbortSignal
 		) => {
@@ -37,10 +37,7 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 
 			if (!response.ok) throw result;
 
-			return MovementEndpoint.parse(result) as Extract<
-				MovementEndpoint,
-				{ type: T["type"] }
-			>;
+			return MovementEndpoint.parse(result);
 		},
 
 		async findAll(accountId, accessToken, paginationCriteria, localSignal) {

@@ -3,7 +3,7 @@ import React from "react";
 
 import { useAuthStore } from "@/auth/store";
 import { currencyDefault } from "@/currencies/domain";
-import { useMovementCreateTopupMut } from "@/movements/mutation";
+import { useMovementCreateMut } from "@/movements/mutation";
 import {
 	MovementsNestJSRepository,
 	MovementsRepository,
@@ -23,7 +23,7 @@ export const QuickCharge: React.FC<QuickChargeProps> = ({
 			(a) => a.currency === currencyDefault
 		)?.id || "";
 
-	const movementCreateTopupMut = useMovementCreateTopupMut(movementsRepository);
+	const movementCreateTopupMut = useMovementCreateMut(movementsRepository);
 
 	return (
 		<Box

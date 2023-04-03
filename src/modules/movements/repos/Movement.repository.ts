@@ -8,11 +8,11 @@ import {
 import { IPaginationCriteria } from "@/shared/domain";
 
 export interface MovementsRepository {
-	create: <T extends MovementCreate>(
-		movement: T,
+	create: (
+		movement: MovementCreate,
 		accessToken: Tokens["accessToken"],
 		abortSignal?: AbortSignal
-	) => Promise<Extract<MovementEndpoint, { type: T["type"] }>>;
+	) => Promise<MovementEndpoint>;
 
 	findAll: (
 		accountId: Account["id"],

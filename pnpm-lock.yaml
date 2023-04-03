@@ -12,6 +12,7 @@ specifiers:
   '@tanstack/react-query': 4.24.6
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 14.0.0
+  '@testing-library/user-event': 14.4.3
   '@types/js-cookie': 3.0.2
   '@types/node': 18.13.0
   '@types/react': 18.0.27
@@ -73,6 +74,7 @@ devDependencies:
   '@chakra-ui/cli': 2.3.0_4bewfcp2iebiwuold25d6rgcsy
   '@testing-library/jest-dom': 5.16.5
   '@testing-library/react': 14.0.0_biqbaboplfbrettd7655fr4n2y
+  '@testing-library/user-event': 14.4.3_@testing-library+dom@9.0.0
   '@types/js-cookie': 3.0.2
   '@types/node': 18.13.0
   '@types/react': 18.0.27
@@ -2398,6 +2400,15 @@ packages:
       '@types/react-dom': 18.0.10
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+    dev: true
+
+  /@testing-library/user-event/14.4.3_@testing-library+dom@9.0.0:
+    resolution: {integrity: sha512-kCUc5MEwaEMakkO5x7aoD+DLi02ehmEM2QCGWvNqAS1dV/fAvORWEjnjsEIvml59M7Y5kCkWN6fCCyPOe8OL6Q==}
+    engines: {node: '>=12', npm: '>=6'}
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
+    dependencies:
+      '@testing-library/dom': 9.0.0
     dev: true
 
   /@tootallnate/once/2.0.0:

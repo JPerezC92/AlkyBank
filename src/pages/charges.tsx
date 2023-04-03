@@ -1,9 +1,9 @@
 import { Box, Divider } from "@chakra-ui/react";
 
 import { PrivateLayout } from "@/auth/components";
-import { MovementFormCreateTopup, QuickCharge } from "@/movements/components";
+import { MovementTopupCreateForm, QuickCharge } from "@/movements/components";
 import { PageHeading, PrivateContainer } from "@/shared/components";
-import { ChargeMoney } from "@/shared/SVG/ChargeMoney";
+import { ChargeMoneySvg } from "@/shared/SVG";
 
 const ChargesPage = () => {
 	return (
@@ -28,7 +28,7 @@ const ChargesPage = () => {
 						/>
 
 						<Box display={{ base: "none", md: "block" }} mt="28">
-							<ChargeMoney maxH={{ md: "72", xl: "80" }} />
+							<ChargeMoneySvg maxH={{ md: "72", xl: "80" }} />
 						</Box>
 					</Box>
 
@@ -42,7 +42,7 @@ const ChargesPage = () => {
 					</Box>
 
 					<Box flex="1" marginBlock="auto">
-						<MovementFormCreateTopup marginInline="auto" />
+						<MovementTopupCreateForm marginInline="auto" />
 					</Box>
 				</Box>
 			</PrivateContainer>

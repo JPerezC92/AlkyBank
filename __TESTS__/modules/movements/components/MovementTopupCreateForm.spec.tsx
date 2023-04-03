@@ -1,23 +1,33 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 
-import { currencyDefault } from "@/currencies/domain";
-import { MovementFormCreateTopup } from "@/movements/components";
-import { ApiError } from "@/shared/schemas";
+import { useAuthStore } from "@/auth/store";
+import { MovementTopupCreateForm } from "@/movements/components";
+import { ApiKnowError } from "@/shared/schemas";
+import { AccountMock } from "@/tests/modules/accounts/fixtures";
 import { MovementsMockRepository } from "@/tests/modules/movements/repos";
+import { UserMock } from "@/tests/modules/users/fixtures/user.mock";
 import { AppWrapperProvider } from "@/tests/utils";
+import { UserEndpoint } from "@/users/schemas";
 
-describe("<MovementFormCreateTopup />", () => {
+const accountMock = AccountMock();
+
+const user: UserEndpoint = UserMock([accountMock]);
+
+useAuthStore.setState({ user });
+
+describe("<MovementTopupCreateForm />", () => {
 	test("should create a TOPUP Movement successfully", async () => {
 		const movementsMockRepo = MovementsMockRepository();
+
 		const topupValues = {
-			amount: 7000,
-			date: new Date(),
+			amount: "7000",
+			date: "2023-04-03",
 			concept: "Test concept",
-			currency: currencyDefault,
+			accountId: accountMock.id,
 		};
 
 		render(
-			<MovementFormCreateTopup movementsRepository={movementsMockRepo} />,
+			<MovementTopupCreateForm movementsRepository={movementsMockRepo} />,
 			{ wrapper: AppWrapperProvider() }
 		);
 
@@ -28,7 +38,7 @@ describe("<MovementFormCreateTopup />", () => {
 		const submitButton = screen.getByRole("button");
 
 		fireEvent.change(currencyInput, {
-			target: { value: topupValues.currency },
+			target: { value: topupValues.accountId },
 		});
 		fireEvent.change(amountInput, { target: { value: topupValues.amount } });
 		fireEvent.change(dateInput, { target: { value: topupValues.date } });
@@ -40,28 +50,31 @@ describe("<MovementFormCreateTopup />", () => {
 
 		expect(successToast).toBeInTheDocument();
 		expect(successToast).toHaveTextContent(topupValues.amount.toString());
+		expect(successToast).toHaveTextContent(/charge/i);
 	});
 
 	test("should show a Error message when the creation fails", async () => {
-		const apiErrorMock: ApiError = {
+		const apiErrorMock: ApiKnowError = {
 			code: "TEST_API_ERROR",
 			message: "There was a problem with the transaction",
 			statusCode: 500,
 		};
 
 		const movementsMockRepo = MovementsMockRepository();
+
 		movementsMockRepo.create.mockImplementation(() => {
 			throw apiErrorMock;
 		});
+
 		const topupValues = {
-			amount: 7000,
-			date: new Date(),
+			amount: "7000",
+			date: "2023-04-03",
 			concept: "Test concept",
-			currency: currencyDefault,
+			accountId: accountMock.id,
 		};
 
 		render(
-			<MovementFormCreateTopup movementsRepository={movementsMockRepo} />,
+			<MovementTopupCreateForm movementsRepository={movementsMockRepo} />,
 			{ wrapper: AppWrapperProvider() }
 		);
 
@@ -72,7 +85,7 @@ describe("<MovementFormCreateTopup />", () => {
 		const submitButton = screen.getByRole("button");
 
 		fireEvent.change(currencyInput, {
-			target: { value: topupValues.currency },
+			target: { value: topupValues.accountId },
 		});
 		fireEvent.change(amountInput, { target: { value: topupValues.amount } });
 		fireEvent.change(dateInput, { target: { value: topupValues.date } });

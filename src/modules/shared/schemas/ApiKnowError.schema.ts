@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-export const ApiError = z.object({
+export const ApiKnowError = z.object({
 	code: z.string(),
 	message: z.string(),
 	statusCode: z.number(),
 });
 
-export type ApiError = z.infer<typeof ApiError>;
+export type ApiKnowError = z.infer<typeof ApiKnowError>;

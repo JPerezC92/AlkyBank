@@ -8,28 +8,39 @@ import {
 	Select,
 	Textarea,
 } from "@chakra-ui/react";
+import { z } from "zod";
 
 import { useAuthStore } from "@/auth/store";
-import {
-	MovementCreatePayment,
-	MovementCreateTopup,
-} from "@/movements/schemas";
 import { useForm } from "@/shared/hooks";
+import { ToStringValues } from "@/shared/utils";
 
-type ToStringValues<T extends object> = {
-	[k in keyof T]: string;
-};
+const ValidationSchema = z.object({
+	amount: z
+		.string()
+		.min(1)
+		.transform((v) => parseInt(v, 10)),
+	date: z
+		.string()
+		.min(1)
+		.transform((v) => new Date(v)),
+	concept: z.string(),
+	accountId: z.string().min(1),
+});
 
-type MovementFormProps<T extends object> = {
-	onSubmit?: (v: T) => void;
-	defaultValues?: T;
+type ValidationSchema = z.infer<typeof ValidationSchema>;
+
+type MovementFormProps = {
+	onSubmit?: (v: ValidationSchema) => void;
+	defaultValues?: ToStringValues<ValidationSchema>;
+	isLoading?: boolean;
 } & ChakraProps;
 
-export function MovementForm<
-	Values extends ToStringValues<
-		Omit<MovementCreateTopup | MovementCreatePayment, "type">
-	>
->({ onSubmit, defaultValues, ...props }: MovementFormProps<Values>) {
+export function MovementForm({
+	isLoading,
+	onSubmit,
+	defaultValues,
+	...props
+}: MovementFormProps) {
 	const _defaultValues =
 		{
 			accountId: "",
@@ -43,10 +54,10 @@ export function MovementForm<
 		values,
 		onChange,
 		onSubmit: _onSubmit,
-	} = useForm(_defaultValues, (v) => onSubmit?.(v as unknown as Values));
+	} = useForm(_defaultValues, (v) => onSubmit?.(ValidationSchema.parse(v)));
 
 	return (
-		<chakra.form onSubmit={_onSubmit} {...props}>
+		<chakra.form onSubmit={_onSubmit} {...props} display="contents">
 			<FormControl>
 				<FormLabel>Currency</FormLabel>
 				<Select
@@ -56,6 +67,7 @@ export function MovementForm<
 					name="accountId"
 					onChange={onChange}
 					placeholder="Select a currency"
+					// required
 					value={values.accountId}
 					variant="outline"
 				>
@@ -75,6 +87,7 @@ export function MovementForm<
 					name="amount"
 					onChange={onChange}
 					type="number"
+					// required
 					value={values.amount}
 					variant="outline"
 				/>
@@ -88,6 +101,7 @@ export function MovementForm<
 					name="date"
 					onChange={onChange}
 					type="date"
+					// required
 					value={values.date}
 					variant="outline"
 				/>
@@ -102,12 +116,18 @@ export function MovementForm<
 					resize="vertical"
 					onChange={onChange}
 					value={values.concept}
+					// required
 					size="sm"
 					name="concept"
 				/>
 			</FormControl>
 
-			<Button type="submit" colorScheme="primary">
+			<Button
+				type="submit"
+				colorScheme="primary"
+				isLoading={isLoading}
+				// isDisabled={!ValidationSchema.safeParse(values).success}
+			>
 				Create
 			</Button>
 		</chakra.form>

@@ -16,6 +16,7 @@ export function useForm<T>(form: T, onSubmit?: (values: T) => void) {
 	function _onSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		onSubmit?.(values);
+		setValues(form);
 	}
 
 	return { values, onChange, onSubmit: _onSubmit } as const;
