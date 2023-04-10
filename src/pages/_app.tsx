@@ -9,7 +9,7 @@ import { SpinnerGlobal } from "@/shared/components";
 import theme from "@/shared/theme";
 import { ToastUtilityConfig } from "@/shared/utils";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (

@@ -8,6 +8,7 @@ import { fontsConfig } from "./fontsConfig";
 const colors = {
 	bg1: "#ffffff",
 	primary: {
+		base: "#8453F9",
 		50: "#eee4ff",
 		100: "#cab4ff",
 		200: "#a783fc",
@@ -20,6 +21,7 @@ const colors = {
 		900: "#09001f",
 	},
 	secondary: {
+		base: "#4cd1ce",
 		50: "#d9fffc",
 		100: "#adfff2",
 		200: "#7dffe9",

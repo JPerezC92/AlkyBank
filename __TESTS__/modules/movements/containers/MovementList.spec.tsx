@@ -4,6 +4,7 @@ import { useAccountStore } from "@/accounts/store";
 import { useAuthStore } from "@/auth/store";
 import { MovementPreviewCard } from "@/movements/components";
 import { MovementList } from "@/movements/containers";
+import { ApiKnowError } from "@/shared/schemas";
 import { AccountMock } from "@/tests/modules/accounts/fixtures";
 import { MovementsMockRepository } from "@/tests/modules/movements/repos";
 import { AppWrapperProvider } from "@/tests/utils";
@@ -40,7 +41,7 @@ describe("Test <Home /> component", () => {
 	});
 
 	test("should contain a Toast with an error message", async () => {
-		const error: ApiError = {
+		const error: ApiKnowError = {
 			code: "TEST_API_ERROR",
 			message: "An error occurred while retrieving movements",
 			statusCode: 500,

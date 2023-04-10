@@ -1,5 +1,6 @@
 export * from "./environment";
 export * from "./envVariables";
+export * from "./errorDefault";
 export * from "./forInRange";
 export * from "./httpVerb";
 export * from "./isApiError";

@@ -5,7 +5,9 @@ import { AccountEndpoint } from "@/accounts/schemas";
 export function AccountMock(): AccountEndpoint {
 	return {
 		id: crypto.randomUUID(),
-		money: 100,
+		balance: 0,
+		expense: 0,
+		income: 0,
 		currency: "EUR",
 		userId: crypto.randomUUID(),
 		createdAt: new Date(),

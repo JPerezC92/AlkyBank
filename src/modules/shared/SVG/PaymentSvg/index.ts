@@ -1,1 +1,1 @@
-export {PaymentSvg} from './PaymentSvg'
+export { PaymentSvg } from "./PaymentSvg";

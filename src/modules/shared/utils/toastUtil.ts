@@ -4,6 +4,8 @@ import {
 	UseToastOptions,
 } from "@chakra-ui/react";
 
+import { errorDefault } from "./errorDefault";
+
 export let toastRef: CreateToastFnReturn;
 
 export const ToastUtilityConfig: React.FC = () => {
@@ -17,7 +19,7 @@ export const toastUtility = {
 	toast(config?: UseToastOptions) {
 		toastRef({
 			duration: 4000,
-			position: "bottom",
+			position: "bottom-right",
 			variant: "left-accent",
 			...config,
 		});
@@ -25,9 +27,7 @@ export const toastUtility = {
 	errorDefault(config?: ConfigWithoutStatus) {
 		this.toast({
 			...config,
-			status: "error",
-			title: "Unknown Error",
-			description: "Try again later",
+			...errorDefault,
 		});
 	},
 	error(config?: ConfigWithoutStatus) {
