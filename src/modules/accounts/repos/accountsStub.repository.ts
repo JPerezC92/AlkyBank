@@ -34,6 +34,12 @@ export const accountStub3 = new Account({
 	userId: "3",
 });
 
+export const userDetailsStub = {
+	firstName: "John",
+	lastName: "Doe",
+	email: "jhon.doe@gmail.com",
+};
+
 const accountList: Account[] = [accountStub1, accountStub2, accountStub3];
 
 export function AccountsStubRepository(): AccountsRepository {
@@ -46,6 +52,16 @@ export function AccountsStubRepository(): AccountsRepository {
 			}
 
 			return account;
+		},
+
+		findTransferenceDetails: async (accountId) => {
+			const account = accountList.find((a) => a.id === accountId);
+
+			if (!account) {
+				throw errorDefault;
+			}
+
+			return userDetailsStub;
 		},
 	};
 }

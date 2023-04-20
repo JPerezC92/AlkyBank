@@ -1,4 +1,4 @@
-import { Box, ChakraComponent, Icon, Text } from "@chakra-ui/react";
+import { Box, ChakraComponent, Heading, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
@@ -50,10 +50,13 @@ export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
 			</Box>
 
 			<Box>
-				<>{movement.concept}</>
+				<Heading as="h6" size="sm" textTransform="capitalize">
+					{movement.type}
+				</Heading>
+				<Text>{movement.concept}</Text>
 			</Box>
 
-			<Box>
+			<Box textAlign="right">
 				<Text as="div" fontSize="xs">
 					{timeAgo.format(movement.createdAt)}
 				</Text>

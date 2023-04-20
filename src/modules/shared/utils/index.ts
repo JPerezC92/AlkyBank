@@ -1,3 +1,4 @@
+export * from "./behaviorSubjectManager";
 export * from "./environment";
 export * from "./envVariables";
 export * from "./errorDefault";

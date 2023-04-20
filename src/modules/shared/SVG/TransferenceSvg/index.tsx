@@ -1,0 +1,1 @@
+export { TransferenceSvg } from "./TransferenceSvg";

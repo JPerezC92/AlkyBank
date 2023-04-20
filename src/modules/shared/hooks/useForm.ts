@@ -13,11 +13,27 @@ export function useForm<T>(form: T, onSubmit?: (values: T) => void) {
 		setValues((prevState) => ({ ...prevState, [name]: value }));
 	}
 
-	function _onSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		onSubmit?.(values);
+	function resetForm() {
 		setValues(form);
 	}
 
-	return { values, onChange, onSubmit: _onSubmit } as const;
+	function _onSubmit(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		onSubmit?.(values);
+		resetForm();
+	}
+
+	const _setValues = React.useCallback(
+		function _setValues(values: T) {
+			setValues((s) => ({ ...s, ...values }));
+		},
+		[setValues]
+	);
+
+	return {
+		values,
+		onChange,
+		onSubmit: _onSubmit,
+		setValues: _setValues,
+	} as const;
 }
