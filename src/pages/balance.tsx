@@ -8,13 +8,15 @@ import { useAccountStore } from "@/accounts/store";
 import { PrivateLayout } from "@/auth/components";
 import { PageHeading, PrivateContainer } from "@/shared/components";
 import { BalanceSvg, IncomeSvg, PaymentSvg } from "@/shared/SVG";
-import { forInRange } from "@/shared/utils";
+import { forInRange, NextPageWithLayout } from "@/shared/utils";
 
 interface BalancePageProps {
 	accountsRepository?: AccountsRepository;
 }
 
-const BalancePage = ({ accountsRepository }: BalancePageProps) => {
+const BalancePage: NextPageWithLayout = ({
+	accountsRepository,
+}: BalancePageProps) => {
 	const accountActive = useAccountStore((s) => s.accountActive);
 
 	const { data: account, isLoading } = useAccountFindQuery({
@@ -42,7 +44,7 @@ const BalancePage = ({ accountsRepository }: BalancePageProps) => {
 	];
 
 	return (
-		<PrivateLayout>
+		<>
 			<PrivateContainer
 				as="main"
 				display="flex"
@@ -76,7 +78,7 @@ const BalancePage = ({ accountsRepository }: BalancePageProps) => {
 					) : (
 						<React.Fragment>
 							{data.map((v) => (
-								<ListItem key={v.title}>
+								<ListItem key={v.title} width={{ base: "full", sm: "auto" }}>
 									<AccountBalanceCard
 										amount={v.amount}
 										title={v.title}
@@ -93,8 +95,12 @@ const BalancePage = ({ accountsRepository }: BalancePageProps) => {
 					)}
 				</List>
 			</PrivateContainer>
-		</PrivateLayout>
+		</>
 	);
+};
+
+BalancePage.getLayout = function getLayout(page) {
+	return <PrivateLayout>{page}</PrivateLayout>;
 };
 
 export default BalancePage;

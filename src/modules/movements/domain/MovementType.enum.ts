@@ -1,7 +1,6 @@
-export const MovementTypeEnum = ["TOPUP", "PAYMENT", "TRANSFERENCE"] as const;
-export type MovementTypeEnum = (typeof MovementTypeEnum)[number];
+import { EnumType, EnumTypeInfer } from "@/shared/domain";
 
-export const MovementType = MovementTypeEnum.reduce(
-	(a, b) => ({ ...a, [b]: b }),
-	{} as { [key in (typeof MovementTypeEnum)[number]]: key }
-);
+export const MovementType = EnumType("TOPUP", "PAYMENT", "TRANSFERENCE");
+
+// export const MovementType = _MovementType.values;
+export type MovementType = EnumTypeInfer<typeof MovementType>;

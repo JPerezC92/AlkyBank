@@ -1,3 +1,4 @@
+export * from "./MovementFilterControl";
 export * from "./MovementForm";
 export * from "./MovementPaymentCreateForm";
 export * from "./MovementPreviewCard";

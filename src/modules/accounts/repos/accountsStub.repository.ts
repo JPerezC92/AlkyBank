@@ -1,4 +1,8 @@
-import { Account, AccountsRepository } from "@/accounts/domain";
+import {
+	Account,
+	AccountsRepository,
+	AccountTransferReceiver,
+} from "@/accounts/domain";
 import { errorDefault } from "@/shared/utils/errorDefault";
 
 export const accountStub1 = new Account({
@@ -34,11 +38,16 @@ export const accountStub3 = new Account({
 	userId: "3",
 });
 
-export const userDetailsStub = {
-	firstName: "John",
-	lastName: "Doe",
-	email: "jhon.doe@gmail.com",
-};
+export const userDetailsStub: AccountTransferReceiver =
+	new AccountTransferReceiver({
+		id: "1",
+		userDetails: {
+			firstName: "John",
+			lastName: "Doe",
+			email: "jhon.doe@gmail.com",
+		},
+		currency: "USD",
+	});
 
 const accountList: Account[] = [accountStub1, accountStub2, accountStub3];
 

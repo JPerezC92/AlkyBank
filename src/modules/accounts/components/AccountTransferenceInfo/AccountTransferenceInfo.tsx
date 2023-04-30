@@ -19,9 +19,11 @@ export const AccountTransferenceInfo: React.FC<
 	AccountTransferenceInfoProps
 > = ({ accountTransferReceiverSubject: accountReceiver, ...props }) => {
 	const { values, setValues } = useForm({
-		id: "",
-		ownerFullName: "",
-		currency: "",
+		values: {
+			id: "",
+			ownerFullName: "",
+			currency: "",
+		},
 	});
 
 	React.useEffect(() => {

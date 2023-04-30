@@ -2,11 +2,11 @@ import { Box, ChakraComponent, Heading, Icon, Text } from "@chakra-ui/react";
 import React from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
-import { MovementEndpoint } from "@/movements/schemas";
+import { Movement, MovementType } from "@/movements/domain";
 import { timeAgo } from "@/shared/utils/timeAgo";
 
 type MovementPreviewCardProps = {
-	movement: MovementEndpoint;
+	movement: Movement;
 } & Parameters<ChakraComponent<"div">>[0];
 
 export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
@@ -28,7 +28,9 @@ export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
 			{...props}
 		>
 			<Box>
-				{movement.type === "TOPUP" ? (
+				{movement.operationType === MovementType.values.TOPUP ||
+				(movement.operationType === MovementType.values.TRANSFERENCE &&
+					movement.isTransferenceReceived) ? (
 					<Icon
 						as={FaArrowUp}
 						bg="success.300"
@@ -51,7 +53,7 @@ export const MovementPreviewCard: React.FC<MovementPreviewCardProps> = ({
 
 			<Box>
 				<Heading as="h6" size="sm" textTransform="capitalize">
-					{movement.type}
+					{movement.operationType}
 				</Heading>
 				<Text>{movement.concept}</Text>
 			</Box>

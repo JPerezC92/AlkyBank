@@ -1,7 +1,7 @@
-import { User } from "@/users/domain/user.model";
+import { IUser } from "@/users/domain/user.model";
 
 export type UserDetails = {
-	firstName: User["firstName"];
-	lastName: User["lastName"];
-	email: User["email"];
+	firstName: IUser["firstName"];
+	lastName: IUser["lastName"];
+	email: IUser["email"];
 };

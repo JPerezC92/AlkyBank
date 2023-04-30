@@ -25,17 +25,18 @@ const MovementEndpointBase = z.object({
 export const MovementEndpoint = z.discriminatedUnion("type", [
 	z
 		.object({
-			type: z.literal(MovementType.TOPUP),
+			type: z.literal(MovementType.values.TOPUP),
 		})
 		.merge(MovementEndpointBase),
 	z
 		.object({
-			type: z.literal(MovementType.PAYMENT),
+			type: z.literal(MovementType.values.PAYMENT),
 		})
 		.merge(MovementEndpointBase),
 	z
 		.object({
-			type: z.literal(MovementType.TRANSFERENCE),
+			type: z.literal(MovementType.values.TRANSFERENCE),
+			isTransferenceReceived: z.boolean(),
 			toAccountId: z.string().uuid(),
 		})
 		.merge(MovementEndpointBase),

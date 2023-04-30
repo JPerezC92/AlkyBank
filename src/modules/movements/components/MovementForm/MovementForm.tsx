@@ -60,7 +60,10 @@ export function MovementForm({
 		values,
 		onChange,
 		onSubmit: _onSubmit,
-	} = useForm(_defaultValues, (v) => onSubmit?.(ValidationSchema.parse(v)));
+	} = useForm({
+		values: _defaultValues,
+		onSubmit: (v) => onSubmit?.(ValidationSchema.parse(v)),
+	});
 
 	return (
 		<chakra.form onSubmit={_onSubmit} {...props} display="contents">

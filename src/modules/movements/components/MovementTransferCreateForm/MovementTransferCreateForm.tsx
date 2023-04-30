@@ -50,7 +50,7 @@ export const MovementTransferCreateForm: React.FC<
 
 					movementCreateMut.mutate({
 						...values,
-						type: MovementType.TRANSFERENCE,
+						type: MovementType.values.TRANSFERENCE,
 						toAccountId: accountTransferReceiver.id,
 					});
 				}}

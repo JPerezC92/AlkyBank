@@ -21,7 +21,7 @@ export function useMovementCreateMut(movementsRepository: MovementsRepository) {
 		},
 		{
 			onSuccess: (data) => {
-				if (data.type === MovementType.TOPUP) {
+				if (data.type === MovementType.values.TOPUP) {
 					return toastUtility.success({
 						title: "New Charge",
 						description: (
@@ -35,7 +35,7 @@ export function useMovementCreateMut(movementsRepository: MovementsRepository) {
 					});
 				}
 
-				if (data.type === MovementType.PAYMENT) {
+				if (data.type === MovementType.values.PAYMENT) {
 					return toastUtility.success({
 						title: "New Payment",
 						description: (

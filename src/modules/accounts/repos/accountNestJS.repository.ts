@@ -1,8 +1,9 @@
-import { Account, AccountsRepository } from "@/accounts/domain";
+import { AccountEndpointToModel } from "@/accounts/adapters";
+import { AccountsRepository } from "@/accounts/domain";
 import { AccountEndpoint } from "@/accounts/schemas";
 import { useAuthStore } from "@/auth/store";
 import { formatToken } from "@/auth/utils/parseToken";
-import { AccountTransferenceDetailsEndpoint } from "@/movements/schemas/AccountTransferenceDetails.schema";
+import { AccountTransferenceDetailsEndpoint } from "@/movements/schemas";
 import { MyRepo } from "@/shared/repos";
 import { EnvVariables, HttpVerb } from "@/shared/utils";
 
@@ -30,7 +31,7 @@ export const AccountsNestJSRepository: MyRepo<AccountsRepository> = () => {
 
 			const validatedRedsult = AccountEndpoint.parse(result);
 
-			return new Account(validatedRedsult);
+			return AccountEndpointToModel(validatedRedsult);
 		},
 
 		findTransferenceDetails: async (accountId, signal) => {

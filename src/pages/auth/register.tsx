@@ -2,12 +2,11 @@ import { Box } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Image from "next/image";
 
-import { RegisterForm } from "@/auth/components";
-import { PublicRoute } from "@/auth/containers";
+import { PublicLayout, RegisterForm } from "@/auth/components";
 
 const RegisterPage: NextPage = () => {
 	return (
-		<PublicRoute>
+		<PublicLayout>
 			<Box
 				as="main"
 				height="100%"
@@ -45,7 +44,7 @@ const RegisterPage: NextPage = () => {
 					padding="6"
 				/>
 			</Box>
-		</PublicRoute>
+		</PublicLayout>
 	);
 };
 

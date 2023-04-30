@@ -1,6 +1,6 @@
-import { Credentials } from "@/auth/schemas/Credentials.schema";
-import { Tokens } from "@/auth/schemas/Tokens.schema";
-import { UserEndpoint } from "@/users/schemas";
+import { AuthDetails } from "@/auth/domain";
+import { Credentials, Tokens } from "@/auth/schemas";
+import { User } from "@/users/domain";
 
 export interface AuthRepository {
 	login(
@@ -10,6 +10,13 @@ export interface AuthRepository {
 	userInfo(
 		accessToken: Tokens["accessToken"],
 		abortSignal?: AbortSignal
-	): Promise<UserEndpoint>;
-	refreshToken(abortSignal?: AbortSignal): Promise<Tokens["accessToken"]>;
+	): Promise<User>;
+	refreshToken(
+		refreshToken: AuthDetails["refreshToken"],
+		abortSignal?: AbortSignal
+	): Promise<Tokens["accessToken"]>;
+	logout(
+		refreshToken: AuthDetails["refreshToken"],
+		abortSignal?: AbortSignal
+	): Promise<void>;
 }

@@ -3,50 +3,47 @@ import { NextPage } from "next";
 import Image from "next/image";
 
 import { LoginForm } from "@/auth/components/LoginForm";
-import { AuthLayout } from "@/auth/containers/AuthLayout";
-import { PublicRoute } from "@/auth/containers/PublicRoute";
+import { PublicLayout } from "@/auth/components/PublicLayout";
 
 const LoginPage: NextPage = () => {
 	return (
-		<AuthLayout>
-			<PublicRoute>
+		<PublicLayout>
+			<Box
+				as="main"
+				flex="1"
+				height="100%"
+				display="flex"
+				flexDirection="column"
+				paddingBlock="8"
+				paddingInline="4"
+				position="relative"
+			>
 				<Box
-					as="main"
-					flex="1"
+					position="absolute"
+					inset="0"
+					transform={{ base: "translateY(-25%)", sm: "translateY(-10rem)" }}
+					maxWidth="sm"
+					marginInline="auto"
 					height="100%"
-					display="flex"
-					flexDirection="column"
-					paddingBlock="8"
-					paddingInline="4"
-					position="relative"
+					zIndex="-1"
 				>
-					<Box
-						position="absolute"
-						inset="0"
-						transform={{ base: "translateY(-25%)", sm: "translateY(-10rem)" }}
-						maxWidth="sm"
-						marginInline="auto"
-						height="100%"
-						zIndex="-1"
-					>
-						<Image src="/sign-in-img.svg" fill alt="login image" priority />
-					</Box>
-
-					<LoginForm
-						margin="auto"
-						w="full"
-						maxWidth="sm"
-						borderColor="primary.500"
-						borderStyle="solid"
-						borderWidth="thin"
-						borderRadius="base"
-						transform={{ base: "translateY(15%)", sm: "translateY(4rem)" }}
-						boxShadow="md"
-						padding="6"
-					/>
+					<Image src="/sign-in-img.svg" fill alt="login image" priority />
 				</Box>
-			</PublicRoute>
-		</AuthLayout>
+
+				<LoginForm
+					margin="auto"
+					w="full"
+					maxWidth="sm"
+					borderColor="primary.500"
+					borderStyle="solid"
+					borderWidth="thin"
+					borderRadius="base"
+					transform={{ base: "translateY(15%)", sm: "translateY(4rem)" }}
+					boxShadow="md"
+					padding="6"
+				/>
+			</Box>
+		</PublicLayout>
 	);
 };
 

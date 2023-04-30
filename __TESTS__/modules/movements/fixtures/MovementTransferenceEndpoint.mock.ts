@@ -14,5 +14,6 @@ export function MovementTransferenceEndpointMock(): MovementTransferenceEndpoint
 		updatedAt: new Date(),
 		type: "TRANSFERENCE",
 		toAccountId: "2",
+		isTransferenceReceived: false,
 	};
 }

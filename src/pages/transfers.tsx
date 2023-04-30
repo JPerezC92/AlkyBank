@@ -9,10 +9,11 @@ import { PrivateLayout } from "@/auth/components";
 import { MovementTransferCreateForm } from "@/movements/components";
 import { PageHeading, PrivateContainer } from "@/shared/components";
 import { TransferenceSvg } from "@/shared/SVG/TransferenceSvg";
+import { NextPageWithLayout } from "@/shared/utils";
 
-const TransfersPage = () => {
+const TransfersPage: NextPageWithLayout = () => {
 	return (
-		<PrivateLayout>
+		<>
 			<PrivateContainer
 				as="main"
 				display="flex"
@@ -65,8 +66,12 @@ const TransfersPage = () => {
 					/>
 				</Box>
 			</PrivateContainer>
-		</PrivateLayout>
+		</>
 	);
+};
+
+TransfersPage.getLayout = function getLayout(page) {
+	return <PrivateLayout>{page}</PrivateLayout>;
 };
 
 export default TransfersPage;

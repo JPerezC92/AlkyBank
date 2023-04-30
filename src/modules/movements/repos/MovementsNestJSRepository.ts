@@ -1,5 +1,6 @@
 import { Tokens } from "@/auth/schemas";
 import { formatToken } from "@/auth/utils/parseToken";
+import { MovementEndpointToModel } from "@/movements/adapters/MovementEndpointToModel.adapter";
 import {
 	MovementCreate,
 	MovementEndpoint,
@@ -40,11 +41,18 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 			return MovementEndpoint.parse(result);
 		},
 
-		async findAll(accountId, accessToken, paginationCriteria, localSignal) {
+		async findAll(
+			accessToken,
+			paginationCriteria,
+			movementFilter,
+			localSignal
+		) {
 			const query = new URLSearchParams();
-			query.append("accountId", accountId);
 			query.append("page", paginationCriteria.page.toString());
 			query.append("limit", paginationCriteria.limit.toString());
+			query.append("accountId", movementFilter.accountId);
+			query.append("operation", movementFilter.operationType);
+			query.append("concept", movementFilter?.concept || "");
 
 			const headers = new Headers();
 			headers.append("Content-Type", "application/json");
@@ -61,7 +69,11 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 
 			if (!response.ok) throw result;
 
-			return MovementGETResponse.parse(result);
+			const resultValidated = MovementGETResponse.parse(result);
+			return {
+				movementList: resultValidated.movementList.map(MovementEndpointToModel),
+				pagination: resultValidated.pagination,
+			};
 		},
 	};
 };

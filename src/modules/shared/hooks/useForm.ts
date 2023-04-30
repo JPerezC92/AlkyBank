@@ -1,6 +1,13 @@
 import React from "react";
 
-export function useForm<T>(form: T, onSubmit?: (values: T) => void) {
+interface IUseForm<T> {
+	values: T;
+	onSubmit?: (values: T) => void;
+	clearOnSubmit?: boolean;
+}
+
+export function useForm<T>(props: IUseForm<T>) {
+	const { values: form, onSubmit, clearOnSubmit = true } = props;
 	const [values, setValues] = React.useState(form);
 
 	function onChange(
@@ -17,10 +24,10 @@ export function useForm<T>(form: T, onSubmit?: (values: T) => void) {
 		setValues(form);
 	}
 
-	function _onSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
+	function _onSubmit(e?: React.FormEvent<HTMLFormElement>) {
+		e?.preventDefault();
 		onSubmit?.(values);
-		resetForm();
+		clearOnSubmit && resetForm();
 	}
 
 	const _setValues = React.useCallback(
@@ -31,9 +38,11 @@ export function useForm<T>(form: T, onSubmit?: (values: T) => void) {
 	);
 
 	return {
+		initialValues: form,
 		values,
 		onChange,
 		onSubmit: _onSubmit,
 		setValues: _setValues,
+		resetForm,
 	} as const;
 }

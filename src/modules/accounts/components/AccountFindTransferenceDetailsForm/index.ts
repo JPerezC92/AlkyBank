@@ -1,1 +1,1 @@
-export {AccountFindTransferenceDetailsForm} from './AccountFindTransferenceDetailsForm'
+export { AccountFindTransferenceDetailsForm } from "./AccountFindTransferenceDetailsForm";

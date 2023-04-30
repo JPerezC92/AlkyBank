@@ -3,6 +3,7 @@ import { Tokens } from "@/auth/schemas/Tokens.schema";
 import { formatToken } from "@/auth/utils/parseToken";
 import { MyRepo } from "@/shared/repos/MyRepo";
 import { EnvVariables, HttpVerb } from "@/shared/utils";
+import { UserEndpointToModel } from "@/users/adapter";
 import { UserEndpoint } from "@/users/schemas/UserEndpoint.schema";
 
 import { AuthRepository } from "./auth.repository";
@@ -58,13 +59,14 @@ export const AuthNestJSRepository: MyRepo<AuthRepository> = (
 
 			if (!response.ok) throw result;
 
-			return UserEndpoint.parse(result);
+			const resultValidated = UserEndpoint.parse(result);
+
+			return UserEndpointToModel(resultValidated);
 		},
 
-		async refreshToken(abortSignal) {
-			const refreshToken = CookieRepository.find(CookieKeys.refreshToken);
+		async refreshToken(refreshToken, abortSignal) {
 			const headers = new Headers();
-			headers.append("x-refresh-token", refreshToken || "");
+			headers.append("x-refresh-token", refreshToken);
 			headers.append("Accept", "application/json");
 
 			const response = await fetch(baseUrl + "/refresh-token", {
@@ -84,6 +86,23 @@ export const AuthNestJSRepository: MyRepo<AuthRepository> = (
 
 			CookieRepository.save(CookieKeys.refreshToken, newRefreshToken);
 			return accessToken;
+		},
+
+		logout: async (refreshToken, abortSignal) => {
+			const headers = new Headers();
+			headers.append("x-refresh-token", refreshToken);
+			headers.append("Accept", "application/json");
+
+			const response = await fetch(baseUrl + "/logout", {
+				signal: abortSignal || mainAbortSignal,
+				method: HttpVerb.POST,
+				headers,
+			});
+
+			if (!response.ok) {
+				const result = await response?.json();
+				throw result;
+			}
 		},
 	};
 };

@@ -12,17 +12,17 @@ const MovementBase = z.object({
 export const MovementCreate = z.discriminatedUnion("type", [
 	z
 		.object({
-			type: z.literal(MovementType.TOPUP),
+			type: z.literal(MovementType.values.TOPUP),
 		})
 		.merge(MovementBase),
 	z
 		.object({
-			type: z.literal(MovementType.PAYMENT),
+			type: z.literal(MovementType.values.PAYMENT),
 		})
 		.merge(MovementBase),
 	z
 		.object({
-			type: z.literal(MovementType.TRANSFERENCE),
+			type: z.literal(MovementType.values.TRANSFERENCE),
 			toAccountId: z.string().uuid(),
 		})
 		.merge(MovementBase),

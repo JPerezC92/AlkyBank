@@ -1,16 +1,17 @@
 import React from "react";
 
+import { useAccountStore } from "@/accounts/store";
+import { Movement, MovementFilterTypeEnum } from "@/movements/domain";
 import { useMovementsFindQuery } from "@/movements/hooks";
 import {
 	MovementsNestJSRepository,
 	MovementsRepository,
 } from "@/movements/repos";
-import { MovementEndpoint } from "@/movements/schemas";
 import { PaginationEndpoint } from "@/shared/schemas";
 
 interface MovementListRenderProps {
 	loading: boolean;
-	movementList: MovementEndpoint[];
+	movementList: Movement[];
 	pagination?: PaginationEndpoint;
 }
 
@@ -27,19 +28,24 @@ export const MovementList: React.FC<MovementListProps> = ({
 	limit,
 	children,
 }) => {
+	const accountActive = useAccountStore((s) => s.accountActive);
 	const movementListQuery = useMovementsFindQuery(
 		movementsRepository,
 		page,
-		limit
+		limit,
+		accountActive?.id || "",
+		MovementFilterTypeEnum.values.ALL
 	);
+
+	const { data, isLoading } = movementListQuery;
 
 	return (
 		<>
 			{children &&
 				children({
-					loading: movementListQuery.isLoading,
-					movementList: movementListQuery.data?.movementList || [],
-					pagination: movementListQuery.data?.pagination,
+					loading: isLoading,
+					movementList: data?.movementList || [],
+					pagination: data?.pagination,
 				})}
 		</>
 	);

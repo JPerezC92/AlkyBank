@@ -1,1 +1,1 @@
-export {AccountTransferenceInfo} from './AccountTransferenceInfo'
+export { AccountTransferenceInfo } from "./AccountTransferenceInfo";

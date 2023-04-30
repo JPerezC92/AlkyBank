@@ -1,2 +1,4 @@
+export * from "./EnumType";
 export * from "./FormatMoney.util";
-export * from "./PaginationCriteria.interface";
+export * from "./MovementFilter.model";
+export * from "./PaginationCriteria.model";

@@ -5,6 +5,7 @@ export * from "./errorDefault";
 export * from "./forInRange";
 export * from "./httpVerb";
 export * from "./isApiError";
+export * from "./NextPageWithLayout";
 export * from "./timeAgo";
 export * from "./toastUtil";
 export * from "./toStringValues";

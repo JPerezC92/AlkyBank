@@ -1,5 +1,9 @@
+import { AuthDetails } from "@/auth/domain";
+
 export const AuthQueryKeys = {
 	all: ["Auth"],
-	userInfo: () => [...AuthQueryKeys.all, "UserInfo"] as const,
-	refreshToken: () => [...AuthQueryKeys.all, "RefreshToken"] as const,
+	userInfo: (accessToken: AuthDetails["accessToken"]) =>
+		[...AuthQueryKeys.all, "UserInfo", accessToken] as const,
+	refreshToken: (refreshToken: AuthDetails["refreshToken"]) =>
+		[...AuthQueryKeys.all, "RefreshToken", refreshToken] as const,
 } as const;

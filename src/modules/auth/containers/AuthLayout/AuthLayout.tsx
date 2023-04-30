@@ -1,42 +1,50 @@
 import React from "react";
 
+import { AuthDetails } from "@/auth/domain";
 import { useRefreshTokenQuery, useUserInfoQuery } from "@/auth/hooks";
-import { AuthRepository, CookieRepository } from "@/auth/repos";
+import { AuthRepository, CookieKeys, CookieRepository } from "@/auth/repos";
 import { useAuthStore } from "@/auth/store";
-import { SpinnerHide, SpinnerShow } from "@/shared/components";
+import { useIsClient } from "@/shared/hooks";
 import { MyRepo } from "@/shared/repos";
 
+interface ChildrenProps {
+	isLoading: boolean;
+	isAuthenticated: boolean;
+}
+
 type AuthLayoutProps = {
-	children: React.ReactNode;
+	children: (props: ChildrenProps) => React.ReactNode;
 	authRepository?: MyRepo<AuthRepository>;
 	cookieRepository?: CookieRepository;
 };
 
 export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
-	const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-	const authLoadingStatus = useAuthStore((s) => s.loadingStatus);
+	const isClient = useIsClient();
+
 	const accessToken = useAuthStore((s) => s.accessToken);
+	const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
-	const refreshTokenQuery = useRefreshTokenQuery({
-		enabled: authLoadingStatus === "idle" && !isAuthenticated && !accessToken,
-	});
+	const refreshTokenCookie = CookieRepository.find(CookieKeys.refreshToken);
+	const refreshTokenQuery = useRefreshTokenQuery(
+		refreshTokenCookie as AuthDetails["refreshToken"],
+		{ enabled: isClient && !accessToken && !!refreshTokenCookie }
+	);
 
-	const userInfoQuery = useUserInfoQuery({
-		enabled:
-			!!accessToken &&
-			!refreshTokenQuery.isLoading &&
-			(authLoadingStatus === "idle" || authLoadingStatus === "loading"),
-	});
+	const isAccessTokenDefined = !!accessToken || !!refreshTokenQuery.data;
+	const _accessToken = accessToken || refreshTokenQuery.data;
 
-	const isActiveSpinner =
-		userInfoQuery.fetchStatus !== "idle" ||
-		refreshTokenQuery.fetchStatus !== "idle";
+	const userInfoQuery = useUserInfoQuery(
+		_accessToken as AuthDetails["accessToken"],
+		{ enabled: isAccessTokenDefined && !isAuthenticated }
+	);
 
 	return (
 		<>
-			{isActiveSpinner ? <SpinnerShow /> : <SpinnerHide />}
-
-			{children}
+			{children({
+				isAuthenticated,
+				isLoading:
+					!isClient || refreshTokenQuery.isFetching || userInfoQuery.isFetching,
+			})}
 		</>
 	);
 };

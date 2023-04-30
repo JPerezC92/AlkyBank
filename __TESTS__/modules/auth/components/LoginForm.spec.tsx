@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { LoginForm } from "@/auth/components";
 import { Credentials } from "@/auth/schemas";
@@ -34,9 +34,7 @@ describe("<LoginForm />", () => {
 
 		fireEvent.click(submitButton);
 
-		await waitFor(() =>
-			expect(useAuthStore.getState().loadingStatus).toBe("loading")
-		);
+		expect(await screen.findByText(/Welcome/i)).toBeInTheDocument();
 	});
 
 	test("should contain an error message when the aunthentication fails", async () => {
@@ -64,9 +62,5 @@ describe("<LoginForm />", () => {
 		expect(
 			await screen.findByText(/Authentication failed/i)
 		).toBeInTheDocument();
-
-		await waitFor(() =>
-			expect(useAuthStore.getState().loadingStatus).toBe("idle")
-		);
 	});
 });

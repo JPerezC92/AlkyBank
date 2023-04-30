@@ -4,10 +4,11 @@ import { PrivateLayout } from "@/auth/components";
 import { MovementTopupCreateForm, QuickCharge } from "@/movements/components";
 import { PageHeading, PrivateContainer } from "@/shared/components";
 import { ChargeMoneySvg } from "@/shared/SVG";
+import { NextPageWithLayout } from "@/shared/utils";
 
-const ChargesPage = () => {
+const ChargesPage: NextPageWithLayout = () => {
 	return (
-		<PrivateLayout>
+		<>
 			<PrivateContainer
 				as="main"
 				display="flex"
@@ -46,8 +47,12 @@ const ChargesPage = () => {
 					</Box>
 				</Box>
 			</PrivateContainer>
-		</PrivateLayout>
+		</>
 	);
+};
+
+ChargesPage.getLayout = function getLayout(page) {
+	return <PrivateLayout>{page}</PrivateLayout>;
 };
 
 export default ChargesPage;

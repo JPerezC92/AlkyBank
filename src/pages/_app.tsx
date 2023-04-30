@@ -7,17 +7,22 @@ import type { AppProps } from "next/app";
 
 import { SpinnerGlobal } from "@/shared/components";
 import theme from "@/shared/theme";
-import { ToastUtilityConfig } from "@/shared/utils";
+import { NextPageWithLayout, ToastUtilityConfig } from "@/shared/utils";
 
 export const queryClient = new QueryClient();
 
-export default function App({ Component, pageProps }: AppProps) {
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout;
+};
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+	const getLayout = Component.getLayout ?? ((page) => page);
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ChakraProvider theme={theme} resetCSS>
 				<SpinnerGlobal />
 				<ToastUtilityConfig />
-				<Component {...pageProps} />
+				{getLayout(<Component {...pageProps} />)}
 			</ChakraProvider>
 		</QueryClientProvider>
 	);

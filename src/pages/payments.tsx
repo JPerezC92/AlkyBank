@@ -4,10 +4,11 @@ import { PrivateLayout } from "@/auth/components/PrivateLayout";
 import { MovementPaymentCreateForm } from "@/movements/components";
 import { PageHeading, PrivateContainer } from "@/shared/components";
 import { PaymentSvg } from "@/shared/SVG";
+import { NextPageWithLayout } from "@/shared/utils";
 
-const PaymentsPage = () => {
+const PaymentsPage: NextPageWithLayout = () => {
 	return (
-		<PrivateLayout>
+		<>
 			<PrivateContainer
 				as="main"
 				display="flex"
@@ -29,8 +30,12 @@ const PaymentsPage = () => {
 					<MovementPaymentCreateForm />
 				</Box>
 			</PrivateContainer>
-		</PrivateLayout>
+		</>
 	);
+};
+
+PaymentsPage.getLayout = function getLayout(page) {
+	return <PrivateLayout>{page}</PrivateLayout>;
 };
 
 export default PaymentsPage;

@@ -1,11 +1,8 @@
-import { Account } from "@/accounts/domain";
 import { Tokens } from "@/auth/schemas";
-import {
-	MovementCreate,
-	MovementEndpoint,
-	MovementGETResponse,
-} from "@/movements/schemas";
-import { IPaginationCriteria } from "@/shared/domain";
+import { Movement } from "@/movements/domain";
+import { MovementCreate, MovementEndpoint } from "@/movements/schemas";
+import { IMovementCriteria, IPaginationCriteria } from "@/shared/domain";
+import { PaginationEndpoint } from "@/shared/schemas";
 
 export interface MovementsRepository {
 	create: (
@@ -15,9 +12,12 @@ export interface MovementsRepository {
 	) => Promise<MovementEndpoint>;
 
 	findAll: (
-		accountId: Account["id"],
 		accessToken: Tokens["accessToken"],
 		paginationCriteria: IPaginationCriteria,
+		movementCriteria: IMovementCriteria,
 		abortSignal?: AbortSignal
-	) => Promise<MovementGETResponse>;
+	) => Promise<{
+		pagination: PaginationEndpoint;
+		movementList: Movement[];
+	}>;
 }

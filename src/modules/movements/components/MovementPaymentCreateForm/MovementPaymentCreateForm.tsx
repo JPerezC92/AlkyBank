@@ -1,10 +1,7 @@
 import { ChakraComponent, Heading } from "@chakra-ui/react";
 import React from "react";
 
-import {
-	MovementForm,
-	MovementFormWrapper,
-} from "@/movements/components/MovementForm";
+import { MovementForm, MovementFormWrapper } from "@/movements/components";
 import { MovementType } from "@/movements/domain";
 import { useMovementCreateMut } from "@/movements/mutation";
 import {
@@ -32,7 +29,7 @@ export const MovementPaymentCreateForm: React.FC<
 				onSubmit={(values) => {
 					movementCreateMut.mutate({
 						...values,
-						type: MovementType.PAYMENT,
+						type: MovementType.values.PAYMENT,
 					});
 				}}
 			/>

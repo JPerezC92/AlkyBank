@@ -4,16 +4,16 @@ export const CookieKeys = {
 	refreshToken: "AUTH_REFRESH_TOKEN",
 } as const;
 
-type Keys = (typeof CookieKeys)[keyof typeof CookieKeys];
+export type CookieKeys = (typeof CookieKeys)[keyof typeof CookieKeys];
 
 export interface CookieRepository {
-	save: <Value>(key: Keys, value: Value) => void;
-	find: <T extends string>(key: Keys) => T | undefined;
-	remove: (key: Keys) => void;
+	save: <Value>(key: CookieKeys, value: Value) => void;
+	find: <T extends string>(key: CookieKeys) => T | undefined;
+	remove: (key: CookieKeys) => void;
 }
 
 export const CookieRepository: CookieRepository = {
-	save: <Value>(key: Keys, value: Value): void => {
+	save: <Value>(key: CookieKeys, value: Value): void => {
 		const _value: string =
 			typeof value !== "string" ? JSON.stringify(value) : value;
 
@@ -25,7 +25,7 @@ export const CookieRepository: CookieRepository = {
 		});
 	},
 
-	find: <T extends string>(key: Keys): T | undefined => {
+	find: <T extends string>(key: CookieKeys): T | undefined => {
 		const value = Cookie.get(key);
 
 		return value as T;

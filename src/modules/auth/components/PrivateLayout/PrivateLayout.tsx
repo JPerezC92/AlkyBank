@@ -10,9 +10,11 @@ type PrivateLayoutProps = {
 export const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
 	return (
 		<AuthLayout>
-			<PrivateRoute>
-				<AppLayout>{children}</AppLayout>
-			</PrivateRoute>
+			{({ isAuthenticated, isLoading }) => (
+				<PrivateRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
+					<AppLayout>{children}</AppLayout>
+				</PrivateRoute>
+			)}
 		</AuthLayout>
 	);
 };

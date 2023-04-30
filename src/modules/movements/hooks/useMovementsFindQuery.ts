@@ -1,34 +1,43 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useAccountStore } from "@/accounts/store";
 import { useAuthStore } from "@/auth/store";
 import { MovementsQueryKeys } from "@/movements/domain";
 import { MovementsRepository } from "@/movements/repos";
-import { IPaginationCriteria } from "@/shared/domain";
+import { IMovementCriteria, IPaginationCriteria } from "@/shared/domain";
 import { isApiError, toastUtility } from "@/shared/utils";
 
 export function useMovementsFindQuery(
 	movementsRepository: MovementsRepository,
 	page: IPaginationCriteria["page"] = 1,
-	limit: IPaginationCriteria["limit"] = 10
+	limit: IPaginationCriteria["limit"] = 10,
+	accountId?: IMovementCriteria["accountId"],
+	operationType?: IMovementCriteria["operationType"],
+	concept?: IMovementCriteria["concept"]
 ) {
-	const accountActive = useAccountStore((s) => s.accountActive);
 	const accessToken = useAuthStore((s) => s.accessToken);
 
 	return useQuery(
-		MovementsQueryKeys.findMovements(),
+		MovementsQueryKeys.findMovements(
+			{ page, limit },
+			{ accountId, operationType, concept }
+		),
 		async ({ signal }) => {
-			if (!accountActive) return;
+			if (!accountId || !operationType) return;
 
 			return await movementsRepository.findAll(
-				accountActive.id,
 				accessToken,
 				{ page, limit },
+				{
+					accountId,
+					operationType,
+					concept,
+				},
 				signal
 			);
 		},
 		{
-			enabled: !!accountActive,
+			enabled: !!accessToken && !!accountId && !!operationType,
+			keepPreviousData: true,
 			onError: (err) => {
 				if (!isApiError(err)) return toastUtility.errorDefault();
 

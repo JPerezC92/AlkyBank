@@ -26,16 +26,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	...props
 }) => {
 	const saveAccessToken = useAuthStore((s) => s.saveAccessToken);
-	const authLoadingStart = useAuthStore((s) => s.loadingStart);
 
 	const submit = useMutation({
 		mutationFn: async (credentials: Credentials) => {
 			const accessToken = await authRepository.login(credentials);
 			saveAccessToken(accessToken);
 		},
-		onSuccess: () => {
-			authLoadingStart();
-		},
+
 		onError: (e) => {
 			if (!isApiError(e)) return toastUtility.errorDefault();
 
@@ -46,10 +43,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 		},
 	});
 
-	const { onChange, onSubmit, values } = useForm<Credentials>(
-		{ email: "jperez.c92@gmail.com", password: "123456aA-" },
-		(credentials) => submit.mutate(credentials)
-	);
+	const { onChange, onSubmit, values } = useForm<Credentials>({
+		values: { email: "jperez.c92@gmail.com", password: "123456aA-" },
+		onSubmit: (credentials) => submit.mutate(credentials),
+	});
 
 	return (
 		<chakra.form
