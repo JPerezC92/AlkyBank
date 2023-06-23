@@ -29,9 +29,13 @@ export class MovementTopup implements IMovement<"TOPUP">, IMovementOperations {
 	formatAmount() {
 		return FormatMoney(this.amount, this.currency);
 	}
-}
 
-export interface ITransference extends IMovement<"TRANSFERENCE"> {
-	toAccountId: string;
-	isTransferenceReceived: boolean;
+	updateValues(
+		values: Pick<IMovement<"TOPUP">, "concept" | "date">
+	): MovementTopup {
+		return new MovementTopup({
+			...this,
+			...values,
+		});
+	}
 }

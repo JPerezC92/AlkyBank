@@ -31,4 +31,13 @@ export class MovementPayment
 	formatAmount() {
 		return FormatMoney(this.amount, this.currency);
 	}
+
+	updateValues(
+		values: Pick<IMovement<"PAYMENT">, "concept" | "date">
+	): MovementPayment {
+		return new MovementPayment({
+			...this,
+			...values,
+		});
+	}
 }

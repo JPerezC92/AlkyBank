@@ -6,4 +6,5 @@ export const AuthMockRepository = () =>
 		userInfo: jest.fn(),
 		refreshToken: jest.fn(),
 		logout: jest.fn(),
+		changePassword: jest.fn(),
 	} satisfies AuthRepository);

@@ -11,7 +11,8 @@ import {
 import dayjs from "dayjs";
 import { z } from "zod";
 
-import { useAuthStore } from "@/auth/store";
+import { useAccountStore } from "@/accounts/store";
+import { useAuthenticatedStore } from "@/auth/store";
 import { useForm } from "@/shared/hooks";
 import { ToStringValues } from "@/shared/utils";
 
@@ -48,13 +49,17 @@ export function MovementForm({
 	defaultValues,
 	...props
 }: MovementFormProps) {
+	const {
+		user: { accountList: getCurrencyList },
+	} = useAuthenticatedStore();
+	const { accountActive } = useAccountStore();
+
 	const _defaultValues = defaultValues || {
-		accountId: "",
+		accountId: accountActive?.id || "",
 		amount: "",
 		concept: "",
 		date: isTransference ? "" : dayjs().format("YYYY-MM-DD"),
 	};
-	const getCurrencyList = useAuthStore((s) => s?.user)?.accountList;
 
 	const {
 		values,

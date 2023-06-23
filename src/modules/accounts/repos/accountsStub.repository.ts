@@ -72,5 +72,22 @@ export function AccountsStubRepository(): AccountsRepository {
 
 			return userDetailsStub;
 		},
+
+		create: async (currency) => {
+			const account = new Account({
+				id: "4",
+				balance: 100,
+				expense: 0,
+				income: 100,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				currency,
+				userId: "4",
+			});
+
+			accountList.push(account);
+
+			return account;
+		},
 	};
 }

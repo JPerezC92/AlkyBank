@@ -1,11 +1,10 @@
-import { IMovement } from "@/movements/domain/Movement.interface";
+import { IMovement } from "./Movement.interface";
+import { MovementPayment } from "./Movement.payment.model";
+import { MovementTopup } from "./Movement.topup.model";
 import {
 	ITransference,
-	MovementTopup,
-} from "@/movements/domain/Movement.topup.model";
-import { MovementTransference } from "@/movements/domain/Movement.transference.model";
-
-import { MovementPayment } from "./Movement.payment.model";
+	MovementTransference,
+} from "./Movement.transference.model";
 
 export type Movement = MovementTransference | MovementTopup | MovementPayment;
 

@@ -58,5 +58,6 @@ export function MovementsMockRepository() {
 					},
 				} satisfies MovementGETResponse;
 			}),
+		update: jest.fn(),
 	} satisfies MovementsRepository;
 }

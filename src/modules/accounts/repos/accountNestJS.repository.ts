@@ -57,5 +57,28 @@ export const AccountsNestJSRepository: MyRepo<AccountsRepository> = () => {
 
 			return AccountTransferenceDetailsEndpoint.parse(result);
 		},
+
+		create: async (currency) => {
+			const accessToken = useAuthStore.getState().accessToken;
+
+			const headers = new Headers();
+			headers.append("Content-Type", "application/json");
+			headers.append("Accept", "application/json");
+			headers.append("Authorization", formatToken(accessToken));
+
+			const response = await fetch(baseUrl, {
+				method: HttpVerb.POST,
+				headers,
+				body: JSON.stringify({ currency }),
+			});
+
+			const result = await response.json();
+
+			if (!response.ok) throw result;
+
+			const validatedRedsult = AccountEndpoint.parse(result);
+
+			return AccountEndpointToModel(validatedRedsult);
+		},
 	};
 };

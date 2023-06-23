@@ -11,4 +11,5 @@ export interface AccountsRepository {
 		accountId: Account["id"],
 		signal?: AbortSignal
 	): Promise<AccountTransferReceiver>;
+	create(currency: string): Promise<Account>;
 }

@@ -1,10 +1,13 @@
+import { IMovement } from "@/movements/domain/Movement.interface";
+import { IMovementOperations } from "@/movements/domain/MovementOperations.interface";
 import { FormatMoney } from "@/shared/domain";
 
-import { ITransference } from "./Movement.topup.model";
-import { IMovementOperations } from "./MovementOperations.interface";
-
+export interface ITransference extends IMovement<"TRANSFERENCE"> {
+	toAccountId: string;
+	isTransferenceReceived: boolean;
+}
 export class MovementTransference
-	implements ITransference, IMovementOperations
+	implements ITransference, Omit<IMovementOperations, "updateValues">
 {
 	toAccountId: string;
 	id: string;

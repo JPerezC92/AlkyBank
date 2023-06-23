@@ -144,7 +144,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
 			<FormButtonDivider />
 
 			<Link href={webRoutes.auth.login()} legacyBehavior passHref>
-				<Button as="a" colorScheme="secondary" type="submit">
+				<Button as="a" colorScheme="secondary" type="button">
 					Log in
 				</Button>
 			</Link>

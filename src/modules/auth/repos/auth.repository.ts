@@ -1,6 +1,6 @@
 import { AuthDetails } from "@/auth/domain";
 import { Credentials, Tokens } from "@/auth/schemas";
-import { User } from "@/users/domain";
+import { ChangeCredentials, User } from "@/users/domain";
 
 export interface AuthRepository {
 	login(
@@ -17,6 +17,11 @@ export interface AuthRepository {
 	): Promise<Tokens["accessToken"]>;
 	logout(
 		refreshToken: AuthDetails["refreshToken"],
+		abortSignal?: AbortSignal
+	): Promise<void>;
+	changePassword(
+		userId: User["id"],
+		changeCredentials: ChangeCredentials,
 		abortSignal?: AbortSignal
 	): Promise<void>;
 }

@@ -75,5 +75,25 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 				pagination: resultValidated.pagination,
 			};
 		},
+
+		update: async (accessToken, movement, abortSignal) => {
+			const headers = new Headers();
+			headers.append("Content-Type", "application/json");
+			headers.append("Accept", "application/json");
+			headers.append("Authorization", formatToken(accessToken));
+
+			const response = await fetch(`${baseApiUrl}/${movement.id}`, {
+				method: HttpVerb.PUT,
+				signal: abortSignal || mainSignal,
+				body: JSON.stringify(movement),
+				headers,
+			});
+
+			if (!response.ok) throw await response.json();
+
+			const result = await response.json();
+
+			return MovementEndpointToModel(result);
+		},
 	};
 };

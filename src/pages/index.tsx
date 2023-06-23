@@ -11,6 +11,7 @@ import {
 import Head from "next/head";
 import Image from "next/image";
 
+import { useAccountStore } from "@/accounts/store";
 import { PrivateLayout } from "@/auth/components";
 import { useAuthenticatedStore } from "@/auth/store";
 import { MovementPreviewCard } from "@/movements/components";
@@ -21,6 +22,7 @@ import { forInRange, NextPageWithLayout } from "@/shared/utils";
 
 const Home: NextPageWithLayout = () => {
 	const { user } = useAuthenticatedStore();
+	const accountActive = useAccountStore((s) => s.accountActive);
 
 	return (
 		<>
@@ -56,9 +58,13 @@ const Home: NextPageWithLayout = () => {
 					<Box>
 						<FormControl mb="4">
 							<FormLabel>Select an account</FormLabel>
-							<Select disabled={!!user.accountList?.length} variant="filled">
+							<Select
+								// disabled={!!user.accountList?.length}
+								variant="filled"
+								value={accountActive?.id}
+							>
 								{user.accountList.map((account) => (
-									<option key={account.id}>
+									<option key={account.id} value={account.id}>
 										{account.currency} - {account.id}
 									</option>
 								))}

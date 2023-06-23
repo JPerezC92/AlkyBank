@@ -1,23 +1,10 @@
-import {
-	Box,
-	Button,
-	Divider,
-	IconButton,
-	Input,
-	InputGroup,
-	InputLeftAddon,
-	InputRightAddon,
-	List,
-	ListItem,
-	Text,
-} from "@chakra-ui/react";
+import { Box, List, ListItem } from "@chakra-ui/react";
 import React from "react";
-import { FaClipboard } from "react-icons/fa";
 
+import { useAccountStore } from "@/accounts/store";
 import { PrivateLayout } from "@/auth/components";
 import { useAuthenticatedStore } from "@/auth/store";
-import { MovementFilterControl } from "@/movements/components";
-import { MovementType } from "@/movements/domain";
+import { MovementCard, MovementFilterControl } from "@/movements/components";
 import { useMovementsFindQuery } from "@/movements/hooks";
 import { MovementsNestJSRepository } from "@/movements/repos";
 import {
@@ -26,12 +13,13 @@ import {
 	PrivateContainer,
 } from "@/shared/components";
 import { MovementFilter, PaginationCriteria } from "@/shared/domain";
-import { NextPageWithLayout, timeAgo } from "@/shared/utils";
+import { NextPageWithLayout } from "@/shared/utils";
 
 const movementsRepository = MovementsNestJSRepository();
 
 const MovementsPage: NextPageWithLayout = () => {
 	const { user } = useAuthenticatedStore();
+	const accountActive = useAccountStore((s) => s.accountActive);
 	const accountList = user.accountList;
 
 	const [pagination, setPagination] = React.useState(
@@ -39,7 +27,7 @@ const MovementsPage: NextPageWithLayout = () => {
 	);
 
 	const [movementFilter, setMovementFilter] = React.useState(
-		MovementFilter.default(user.getDefaultAccount().id)
+		MovementFilter.default(accountActive?.id)
 	);
 
 	const movementListQuery = useMovementsFindQuery(
@@ -51,7 +39,7 @@ const MovementsPage: NextPageWithLayout = () => {
 		movementFilter.concept
 	);
 
-	const { data } = movementListQuery;
+	const { data: MovementListQueryData } = movementListQuery;
 
 	return (
 		<>
@@ -68,6 +56,9 @@ const MovementsPage: NextPageWithLayout = () => {
 					flexDirection="column"
 				>
 					<MovementFilterControl
+						defaultValues={{
+							accountId: movementFilter.accountId,
+						}}
 						accountList={accountList}
 						onSubmit={(values) =>
 							setMovementFilter((s) => s.changeValues(values))
@@ -83,7 +74,7 @@ const MovementsPage: NextPageWithLayout = () => {
 					/>
 
 					<PaginationControl
-						totalPages={data?.pagination.totalPages}
+						totalPages={MovementListQueryData?.pagination.totalPages}
 						currentPage={pagination.page}
 						limit={pagination.limit}
 						onChangePage={(page) => setPagination((s) => s.changePage(page))}
@@ -101,90 +92,9 @@ const MovementsPage: NextPageWithLayout = () => {
 						gridRow={{ lg: "2/25" }}
 						marginBlockEnd={{ lg: "auto" }}
 					>
-						{data?.movementList.map((m) => (
+						{MovementListQueryData?.movementList.map((m) => (
 							<ListItem key={m.id}>
-								<Box
-									borderColor={
-										m.operationType === MovementType.values.TOPUP
-											? "green.500"
-											: "red.500"
-									}
-									borderWidth="1px"
-									bg="bg1"
-									borderRadius="base"
-									textAlign="center"
-									boxShadow="md"
-								>
-									<Box
-										borderTopRadius="inherit"
-										borderBottom="inherit"
-										bg={
-											m.operationType === MovementType.values.TOPUP
-												? "green.100"
-												: "red.100"
-										}
-										paddingBlock="2"
-										position="relative"
-									>
-										<Text fontWeight="semibold">{m.operationType}</Text>
-										<Box
-											display={
-												m.operationType === MovementType.values.TRANSFERENCE
-													? "none"
-													: "flex"
-											}
-											position="absolute"
-											insetBlock="0"
-											right="2"
-											justifyContent="center"
-											alignItems="center"
-										>
-											<Button
-												inset="0"
-												variant="ghost"
-												size="xs"
-												colorScheme="secondary"
-											>
-												Edit
-											</Button>
-										</Box>
-									</Box>
-
-									<Box p="4">
-										<InputGroup size="xs">
-											<InputLeftAddon>Code</InputLeftAddon>
-											<Input
-												placeholder="mysite"
-												defaultValue={m.id}
-												isReadOnly
-											/>
-											<InputRightAddon p="0" m="0">
-												<IconButton
-													size="xs"
-													icon={<FaClipboard />}
-													aria-label="copy"
-													onClick={() => navigator.clipboard.writeText(m.id)}
-												/>
-											</InputRightAddon>
-										</InputGroup>
-
-										<Text
-											fontSize="3xl"
-											color="primary.400"
-											fontWeight="bold"
-											marginBlockStart="4"
-											marginBlockEnd="2"
-										>
-											{m.formatAmount()}
-										</Text>
-
-										<Text fontSize="sm">{timeAgo.format(m.createdAt)}</Text>
-									</Box>
-
-									<Divider />
-
-									<Text paddingBlock="2">{m.concept}</Text>
-								</Box>
+								<MovementCard movement={m} />
 							</ListItem>
 						))}
 					</List>

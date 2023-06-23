@@ -20,4 +20,10 @@ export interface MovementsRepository {
 		pagination: PaginationEndpoint;
 		movementList: Movement[];
 	}>;
+
+	update: (
+		accessToken: Tokens["accessToken"],
+		movement: Movement,
+		abortSignal?: AbortSignal
+	) => Promise<Movement>;
 }

@@ -1,5 +1,6 @@
 import { Credentials } from "@/auth/schemas/Credentials.schema";
 import { Tokens } from "@/auth/schemas/Tokens.schema";
+import { useAuthStore } from "@/auth/store";
 import { formatToken } from "@/auth/utils/parseToken";
 import { MyRepo } from "@/shared/repos/MyRepo";
 import { EnvVariables, HttpVerb } from "@/shared/utils";
@@ -96,6 +97,26 @@ export const AuthNestJSRepository: MyRepo<AuthRepository> = (
 			const response = await fetch(baseUrl + "/logout", {
 				signal: abortSignal || mainAbortSignal,
 				method: HttpVerb.POST,
+				headers,
+			});
+
+			if (!response.ok) {
+				const result = await response?.json();
+				throw result;
+			}
+		},
+
+		changePassword: async (userId, changeCredentials, abortSignal) => {
+			const { accessToken } = useAuthStore.getState();
+			const headers = new Headers();
+			headers.append("Content-Type", "application/json");
+			headers.append("Accept", "application/json");
+			headers.append("Authorization", formatToken(accessToken));
+
+			const response = await fetch(baseUrl + `/${userId}`, {
+				signal: abortSignal || mainAbortSignal,
+				method: HttpVerb.PATCH,
+				body: JSON.stringify(changeCredentials),
 				headers,
 			});
 

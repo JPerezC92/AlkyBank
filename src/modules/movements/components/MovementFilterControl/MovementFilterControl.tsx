@@ -20,12 +20,14 @@ import { useForm } from "@/shared/hooks";
 import { ToStringValues } from "@/shared/utils";
 
 type MovementFilterControlProps = {
+	defaultValues?: Partial<ToStringValues<IMovementCriteria>>;
 	onSubmit: (movementFilter: Required<IMovementCriteria>) => void;
 	onClear?: (movementFilter: Required<IMovementCriteria>) => void;
 	accountList: AccountEndpoint[];
 } & Omit<Parameters<ChakraComponent<"fieldset">>[0], "onSubmit">;
 
 export const MovementFilterControl: React.FC<MovementFilterControlProps> = ({
+	defaultValues,
 	onSubmit,
 	onClear,
 	accountList,
@@ -40,8 +42,9 @@ export const MovementFilterControl: React.FC<MovementFilterControlProps> = ({
 	} = useForm<Required<ToStringValues<IMovementCriteria>>>({
 		values: {
 			accountId:
-				accountList.find((a) => a.currency === currencyDefault)?.id ||
-				accountList[0].id,
+				defaultValues?.accountId ??
+				(accountList.find((a) => a.currency === currencyDefault)?.id ||
+					accountList[0].id),
 			operationType: MovementFilterTypeEnum.values.ALL,
 			concept: "",
 		},

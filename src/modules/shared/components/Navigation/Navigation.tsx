@@ -1,5 +1,6 @@
 import {
 	Box,
+	chakra,
 	Divider,
 	IconButton,
 	Link,
@@ -9,6 +10,7 @@ import {
 	MenuButton,
 	MenuItem,
 	MenuList,
+	Select,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import NextLink from "next/link";
@@ -17,6 +19,7 @@ import React from "react";
 import { FaHamburger, FaUser } from "react-icons/fa";
 import { IoMdLogOut, IoMdSettings } from "react-icons/io";
 
+import { useAccountStore } from "@/accounts/store";
 import { AuthDetails } from "@/auth/domain";
 import {
 	AuthNestJSRepository,
@@ -40,10 +43,12 @@ const navList = [
 const NavState = EnumType("active", "collapsed");
 type NavState = EnumTypeInfer<typeof NavState>;
 
-export const Navigation: React.FC = () => {
+export const Navigation = () => {
 	const authStoreLogout = useAuthStore((s) => s.logout);
+	const user = useAuthStore((s) => s.user);
 	const asPath = useRouter().asPath.slice(1) || " ";
-
+	const accountActive = useAccountStore((s) => s.accountActive);
+	const changeAccount = useAccountStore((s) => s.changeAccount);
 	const [navState, onToggleNavState] = React.useState<NavState>(
 		NavState.values.collapsed
 	);
@@ -68,6 +73,15 @@ export const Navigation: React.FC = () => {
 		);
 		CookieRepository.remove(CookieKeys.refreshToken);
 		authStoreLogout();
+	}
+
+	function handleChangeAccount(e: React.ChangeEvent<HTMLSelectElement>) {
+		const account = user?.accountList.find(
+			(account) => account.id === e.target.value
+		);
+
+		if (!account) return;
+		changeAccount(account);
 	}
 
 	return (
@@ -104,7 +118,7 @@ export const Navigation: React.FC = () => {
 
 				<Box
 					display="flex"
-					order={{ base: "3", md: "4" }}
+					order={{ base: "4", md: "4" }}
 					marginInlineStart="4"
 				>
 					<Menu>
@@ -130,6 +144,8 @@ export const Navigation: React.FC = () => {
 								icon={<IoMdSettings />}
 								color="secondary.800"
 								fontWeight="semibold"
+								as={NextLink}
+								href={"/configuration"}
 							>
 								Configuration
 							</MenuItem>
@@ -145,9 +161,25 @@ export const Navigation: React.FC = () => {
 					</Menu>
 				</Box>
 
+				<Box order="2">
+					<Select
+						colorScheme="accent"
+						variant="filled"
+						bg="accent.100"
+						_focus={{ bg: "accent.100" }}
+						onChange={handleChangeAccount}
+						value={accountActive?.id}
+					>
+						{user?.accountList?.map((account) => (
+							<chakra.option key={account.id} value={account.id} color="black">
+								{account.currency}
+							</chakra.option>
+						))}
+					</Select>
+				</Box>
 				<Box
 					width="100%"
-					order={{ base: "4", md: "3" }}
+					order="5"
 					as={motion.div}
 					animate={navState}
 					display={{ base: "none", md: "contents !important" }}

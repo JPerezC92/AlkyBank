@@ -52,5 +52,6 @@ export const useAuthStore = create(
 export function useAuthenticatedStore() {
 	return useAuthStore((s) => ({
 		user: s.user as User,
+		accessToken: s.accessToken,
 	}));
 }

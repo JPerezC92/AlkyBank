@@ -19,6 +19,7 @@ export const MovementFormWrapper = ({ ...props }: Props) => {
 			width="full"
 			_before={{
 				borderRadius: "inherit",
+				zIndex: "0",
 				bg: "bg1",
 				inset: "0",
 				position: "absolute",
