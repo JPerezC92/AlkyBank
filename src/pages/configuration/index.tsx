@@ -10,7 +10,7 @@ import {
 	Heading,
 } from "@chakra-ui/react";
 
-import { AccountCreate } from "@/accounts/components";
+import { AccountCreateForm } from "@/accounts/components";
 import { PrivateLayout } from "@/auth/components";
 import { useAuthenticatedStore } from "@/auth/store";
 import { PageHeading, PrivateContainer } from "@/shared/components";
@@ -71,7 +71,7 @@ const ConfigurationPage: NextPageWithLayout = () => {
 					<AccordionPanel pb={4}>
 						<Divider mb={4} borderColor="primary.400" />
 
-						<AccountCreate maxW="xs" />
+						<AccountCreateForm maxW="xs" />
 					</AccordionPanel>
 				</AccordionItem>
 			</Accordion>

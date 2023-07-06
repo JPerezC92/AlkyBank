@@ -4,7 +4,6 @@ import { useAccountStore } from "@/accounts/store";
 import { AuthDetails, AuthQueryKeys } from "@/auth/domain";
 import { AuthNestJSRepository } from "@/auth/repos";
 import { useAuthStore } from "@/auth/store";
-import { toastUtility } from "@/shared/utils";
 
 export function useUserInfoQuery(
 	accessToken: AuthDetails["accessToken"],
@@ -21,7 +20,6 @@ export function useUserInfoQuery(
 		{
 			enabled: config?.enabled,
 			onSuccess: (user) => {
-				toastUtility.success({ title: `Welcome again ${user.firstName}` });
 				saveUser(user);
 				loadAccount(user.accountList);
 			},

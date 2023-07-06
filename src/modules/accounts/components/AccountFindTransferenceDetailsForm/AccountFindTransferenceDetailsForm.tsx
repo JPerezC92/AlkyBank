@@ -8,31 +8,32 @@ import {
 import React from "react";
 import { FaCheck } from "react-icons/fa";
 
-import { AccountTransferReceiver } from "@/accounts/domain";
+import { AccountsRepository, AccountTransferReceiver } from "@/accounts/domain";
 import { useAccountFindTransferReceiver } from "@/accounts/hooks";
 import { IdSchema } from "@/shared/schemas/id.schema";
 import { SubjectManager } from "@/shared/utils";
 
 type AccountFindTransferenceDetailsFormProps = {
 	accountTransferReceiverSubject: SubjectManager<AccountTransferReceiver | null>;
+	accountsRepository?: AccountsRepository;
 };
 
 export const AccountFindTransferenceDetailsForm: React.FC<
 	AccountFindTransferenceDetailsFormProps
-> = ({ accountTransferReceiverSubject }) => {
+> = ({ accountTransferReceiverSubject, accountsRepository }) => {
 	const [toAccountId, setToAccountId] = React.useState("");
 	const [isEnabled, setIsEnabled] = React.useState(false);
 
 	const accountTransferReceiver = useAccountFindTransferReceiver({
 		accountId: toAccountId,
 		enabled: isEnabled,
+		accountsRepository,
 	});
 
 	const isValidAccountCode = IdSchema.safeParse(toAccountId).success;
 
 	React.useEffect(() => {
 		accountTransferReceiver.isFetched && setIsEnabled(false);
-
 		if (!isValidAccountCode || !accountTransferReceiver.error) {
 			accountTransferReceiverSubject.setSubject(null);
 		}
@@ -58,7 +59,7 @@ export const AccountFindTransferenceDetailsForm: React.FC<
 			}}
 		>
 			<FormControl>
-				<FormLabel>Account receiver code</FormLabel>
+				<FormLabel>Account code receiver</FormLabel>
 				<Input
 					autoFocus
 					name="toAccountId"
@@ -76,6 +77,7 @@ export const AccountFindTransferenceDetailsForm: React.FC<
 				marginBlockStart="4"
 				type="submit"
 				isDisabled={!isValidAccountCode}
+				isLoading={accountTransferReceiver.isLoading}
 			>
 				Check
 			</Button>

@@ -13,6 +13,8 @@ export const SpinnerGlobal: React.FC = () => {
 	return (
 		<>
 			<Box
+				role="alert"
+				aria-busy={isActive}
 				position="fixed"
 				width="full"
 				height="full"

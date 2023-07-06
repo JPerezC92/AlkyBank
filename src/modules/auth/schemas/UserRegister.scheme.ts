@@ -13,7 +13,7 @@ export const UserRegisterScheme = userCreate
 			return ctx.addIssue({
 				code: z.ZodIssueCode.custom,
 				message: "Passwords doesn't match",
-				path: ["confirmPassword", "password"],
+				path: ["confirmPassword"],
 			});
 		}
 	});

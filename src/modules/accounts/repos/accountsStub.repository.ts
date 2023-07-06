@@ -65,7 +65,6 @@ export function AccountsStubRepository(): AccountsRepository {
 
 		findTransferenceDetails: async (accountId) => {
 			const account = accountList.find((a) => a.id === accountId);
-
 			if (!account) {
 				throw errorDefault;
 			}

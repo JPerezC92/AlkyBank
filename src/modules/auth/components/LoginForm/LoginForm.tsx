@@ -32,6 +32,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 			const accessToken = await authRepository.login(credentials);
 			saveAccessToken(accessToken);
 		},
+		onSuccess: () => {
+			toastUtility.success({ title: "Welcome" });
+		},
 
 		onError: (e) => {
 			if (!isApiError(e)) return toastUtility.errorDefault();

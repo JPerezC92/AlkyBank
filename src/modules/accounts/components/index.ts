@@ -1,4 +1,4 @@
 export * from "./AccountBalanceCard";
-export * from "./AccountCreate";
+export * from "./AccountCreateForm";
 export * from "./AccountFindTransferenceDetailsForm";
 export * from "./AccountTransferenceInfo";

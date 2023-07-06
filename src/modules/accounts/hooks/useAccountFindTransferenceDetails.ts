@@ -30,6 +30,11 @@ export function useAccountFindTransferReceiver({
 		{
 			enabled,
 			retry: false,
+			onSuccess: () => {
+				toastUtility.success({
+					title: "Account information found",
+				});
+			},
 			onError: (error) => {
 				if (!isApiError(error)) {
 					return toastUtility.errorDefault();

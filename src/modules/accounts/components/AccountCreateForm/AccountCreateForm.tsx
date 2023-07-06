@@ -16,12 +16,12 @@ import { CurrenciesNestJsRepository } from "@/currencies/repos";
 import { useForm } from "@/shared/hooks";
 import { isApiError, toastUtility } from "@/shared/utils";
 
-type AccountCreateProps = {
+type AccountCreateFormProps = {
 	currenciesRepository?: CurrenciesRepository;
 	accountsRepository?: AccountsRepository;
 } & React.ComponentProps<typeof chakra.form>;
 
-export const AccountCreate: React.FC<AccountCreateProps> = ({
+export const AccountCreateForm: React.FC<AccountCreateFormProps> = ({
 	currenciesRepository = CurrenciesNestJsRepository(),
 	accountsRepository = AccountsNestJSRepository(),
 	...props
@@ -85,7 +85,7 @@ export const AccountCreate: React.FC<AccountCreateProps> = ({
 			</FormControl>
 
 			<Button type="submit" colorScheme="primary">
-				Submit
+				Create
 			</Button>
 		</chakra.form>
 	);
