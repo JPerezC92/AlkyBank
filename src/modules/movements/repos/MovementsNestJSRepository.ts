@@ -1,5 +1,6 @@
 import { Tokens } from "@/auth/schemas";
 import { formatToken } from "@/auth/utils/parseToken";
+import { MovementModelToEndpoint } from "@/movements/adapters";
 import { MovementEndpointToModel } from "@/movements/adapters/MovementEndpointToModel.adapter";
 import {
 	MovementCreate,
@@ -70,13 +71,14 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 			if (!response.ok) throw result;
 
 			const resultValidated = MovementGETResponse.parse(result);
+
 			return {
 				movementList: resultValidated.movementList.map(MovementEndpointToModel),
 				pagination: resultValidated.pagination,
 			};
 		},
 
-		update: async (accessToken, movement, abortSignal) => {
+		update: async (movement, accessToken, abortSignal) => {
 			const headers = new Headers();
 			headers.append("Content-Type", "application/json");
 			headers.append("Accept", "application/json");
@@ -85,7 +87,7 @@ export const MovementsNestJSRepository: MyRepo<MovementsRepository> = (
 			const response = await fetch(`${baseApiUrl}/${movement.id}`, {
 				method: HttpVerb.PUT,
 				signal: abortSignal || mainSignal,
-				body: JSON.stringify(movement),
+				body: JSON.stringify(MovementModelToEndpoint(movement)),
 				headers,
 			});
 

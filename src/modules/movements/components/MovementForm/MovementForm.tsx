@@ -116,7 +116,6 @@ export function MovementForm({
 						name="date"
 						onChange={onChange}
 						type="date"
-						// required
 						value={values.date}
 						variant="outline"
 					/>

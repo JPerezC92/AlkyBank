@@ -26,6 +26,7 @@ export function useForm<T>(props: IUseForm<T>) {
 
 	function _onSubmit(e?: React.FormEvent<HTMLFormElement>) {
 		e?.preventDefault();
+
 		onSubmit?.(values);
 		clearOnSubmit && resetForm();
 	}

@@ -31,7 +31,7 @@ export const ModalContainer: React.FC<ModalContainerProps> = ({
 
 				<ModalContent bg="bg1" width="auto">
 					<ModalBody p="0">
-						<MovementEditForm movement={movement} />
+						<MovementEditForm movement={movement} onSuccess={() => onClose()} />
 					</ModalBody>
 				</ModalContent>
 			</Modal>

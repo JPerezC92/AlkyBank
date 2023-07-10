@@ -77,7 +77,7 @@ export const AccountFindTransferenceDetailsForm: React.FC<
 				marginBlockStart="4"
 				type="submit"
 				isDisabled={!isValidAccountCode}
-				isLoading={accountTransferReceiver.isLoading}
+				isLoading={accountTransferReceiver.isFetching}
 			>
 				Check
 			</Button>

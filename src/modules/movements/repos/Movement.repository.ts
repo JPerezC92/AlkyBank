@@ -22,8 +22,8 @@ export interface MovementsRepository {
 	}>;
 
 	update: (
-		accessToken: Tokens["accessToken"],
 		movement: Movement,
+		accessToken: Tokens["accessToken"],
 		abortSignal?: AbortSignal
 	) => Promise<Movement>;
 }

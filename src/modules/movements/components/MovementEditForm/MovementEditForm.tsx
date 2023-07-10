@@ -14,31 +14,62 @@ import { z } from "zod";
 
 import { useAuthenticatedStore } from "@/auth/store";
 import { MovementFormWrapper } from "@/movements/components";
-import { Movement, MovementPayment, MovementTopup } from "@/movements/domain";
+import {
+	Movement,
+	MovementPayment,
+	MovementsQueryKeys,
+	MovementTopup,
+} from "@/movements/domain";
 import {
 	MovementsNestJSRepository,
 	MovementsRepository,
 } from "@/movements/repos";
 import { useForm } from "@/shared/hooks";
+import { isApiError, toastUtility } from "@/shared/utils";
+import { queryClient } from "@/src/pages/_app";
 
 type MovementEditFormProps = {
 	movement: MovementTopup | MovementPayment;
 	movementsRepository?: MovementsRepository;
+	onSuccess?: () => void;
 };
 
 const validationSchema = z.object({
 	concept: z.string(),
-	date: z.string().transform((value) => new Date(value)),
+	date: z.string().transform((value) => dayjs(value, "YYYY-MM-DD").toDate()),
 });
 
 export const MovementEditForm: React.FC<MovementEditFormProps> = ({
 	movement,
+	onSuccess,
 	movementsRepository = MovementsNestJSRepository(),
 }) => {
 	const { accessToken } = useAuthenticatedStore();
-	const mut = useMutation(async (movement: Movement) => {
-		return await movementsRepository.update(accessToken, movement);
-	});
+	const mutate = useMutation(
+		async (movement: Movement) => {
+			return await movementsRepository.update(movement, accessToken);
+		},
+		{
+			onSuccess: () => {
+				onSuccess?.();
+				queryClient.invalidateQueries(MovementsQueryKeys.all);
+				toastUtility.success({
+					title: "Movement updated",
+				});
+			},
+
+			onError: (error) => {
+				if (!isApiError(error)) {
+					return toastUtility.errorDefault();
+				}
+
+				toastUtility.error({
+					title: "Something went wrong, please try again later",
+					description: error.message,
+				});
+			},
+		}
+	);
 
 	const {
 		values,
@@ -50,8 +81,13 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
 			date: dayjs(movement.date).format("YYYY-MM-DD"),
 		},
 		onSubmit: (values) =>
-			mut.mutate(movement.updateValues(validationSchema.parse(values))),
+			mutate.mutate(movement.updateValues(validationSchema.parse(values))),
+		clearOnSubmit: false,
 	});
+
+	const isDisabled =
+		values.concept === movement.concept.toString() &&
+		values.date === dayjs(movement.date).format("YYYY-MM-DD");
 
 	return (
 		<MovementFormWrapper>
@@ -108,7 +144,7 @@ export const MovementEditForm: React.FC<MovementEditFormProps> = ({
 					/>
 				</FormControl>
 
-				<Button type="submit" colorScheme="primary">
+				<Button type="submit" colorScheme="primary" isDisabled={isDisabled}>
 					Save changes
 				</Button>
 			</chakra.form>
