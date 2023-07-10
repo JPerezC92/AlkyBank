@@ -67,6 +67,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
 
 	const { mutate: onSubmit } = useMutation(
 		async (changePassword: ChangeCredentials) => {
+			console.log("MUTATE");
 			await authRepository.changePassword(userId, changePassword);
 		},
 		{
@@ -89,13 +90,16 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
 			display="flex"
 			flexDirection="column"
 			gap={2}
-			onSubmit={handleSubmit((data) => onSubmit(data))}
+			onSubmit={handleSubmit((data) =>
+				onSubmit(ChangePasswordFormScheme.parse(data))
+			)}
 			{...props}
 		>
 			<FormControl isInvalid={!!errors.password?.message}>
 				<FormLabel>Password</FormLabel>
 				<Input
 					{...register("password")}
+					data-testid="password"
 					type="password"
 					variant="outline"
 					focusBorderColor="primary.500"
@@ -109,6 +113,7 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
 				<FormLabel>New Password</FormLabel>
 				<Input
 					{...register("newPassword")}
+					data-testid="newPassword"
 					type="password"
 					variant="outline"
 					focusBorderColor="primary.500"
@@ -119,9 +124,10 @@ export const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
 			</FormControl>
 
 			<FormControl isInvalid={!!errors.confirmNewPassword?.message}>
-				<FormLabel>Confirm Password</FormLabel>
+				<FormLabel>Confirm new password</FormLabel>
 				<Input
 					{...register("confirmNewPassword")}
+					data-testid="confirmNewPassword"
 					type="password"
 					variant="outline"
 					focusBorderColor="primary.500"
