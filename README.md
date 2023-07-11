@@ -1,38 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Alkybank - **[Go to the App](https://alkybank-rho.vercel.app/)**
 
-## Getting Started
+<img src="public/repo-img/home.png" alt="App home" width="750"/>
 
-First, run the development server:
+## Cosas que puse en practica
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+- Implementacion de un sistema de autenticacion basado en JWT.
+- Validacion de entrada y salida de datos.
+- Manejo de rutas privadas y publicas.
+- Implementacion de notificaciones.
+- Implementacion de paginacion.
+- Implementacion de un sistema de filtrado y busqueda.
+- Testing unitario con Jest y React Testing Library.
+- Manejo de errores.
+
+## Tech Stack
+
+- [NextJS](https://nextjs.org/)
+- [React Query](https://tanstack.com/query/v4/docs/react/overview)
+- [Zod](https://zod.dev/)
+- [Chakra ui](https://chakra-ui.com/getting-started)
+
+## Variables de entorno
+
+Para iniciar este proyecto, tendras que añadir las siguientes variables de entorno a tu archivo .env.development.local
+
+```
+// Virtual wallet api
+NEXT_PUBLIC_API
+
+// Web url
+NEXT_PUBLIC_WEB
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como iniciar el proyecto
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Clonar el proyecto
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+  git clone https://github.com/JPerezC92/AlkyBank.git
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Ir al directorio del proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+  cd AlkyBank
+```
 
-## Learn More
+Instalar las dependencias
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+  npm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Iniciar la aplicación
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+  npm run dev
+```
 
-## Deploy on Vercel
+## Galeria
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<img src="public/repo-img/charges.png" alt="App home" width="750"/>
+<img src="public/repo-img/payment.png" alt="App home" width="750"/>
+<img src="public/repo-img/balance.png" alt="App home" width="750"/>
+<img src="public/repo-img/movements.png" alt="App home" width="750"/>
+<img src="public/repo-img/transfer.png" alt="App home" width="750"/>
+<img src="public/repo-img/config.png" alt="App home" width="750"/>

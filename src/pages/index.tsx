@@ -3,6 +3,9 @@ import {
 	FormControl,
 	FormLabel,
 	Heading,
+	IconButton,
+	InputGroup,
+	InputRightAddon,
 	List,
 	ListItem,
 	Select,
@@ -10,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Image from "next/image";
+import { FaClipboard } from "react-icons/fa";
 
 import { useAccountStore } from "@/accounts/store";
 import { PrivateLayout } from "@/auth/components";
@@ -56,19 +60,31 @@ const Home: NextPageWithLayout = () => {
 					</Box>
 
 					<Box>
-						<FormControl mb="4">
-							<FormLabel>Select an account</FormLabel>
-							<Select
-								// disabled={!!user.accountList?.length}
-								variant="filled"
-								value={accountActive?.id}
-							>
-								{user.accountList.map((account) => (
-									<option key={account.id} value={account.id}>
-										{account.currency} - {account.id}
-									</option>
-								))}
-							</Select>
+						<FormControl mb="4" isDisabled>
+							<FormLabel alignSelf="center">Account</FormLabel>
+							<InputGroup size="lg">
+								<Select
+									variant="filled"
+									value={accountActive?.id}
+									_disabled={{ opacity: "1" }}
+								>
+									{user.accountList.map((account) => (
+										<option key={account.id} value={account.id}>
+											{account.currency} - {account.id}
+										</option>
+									))}
+								</Select>
+								<InputRightAddon p="0" m="0">
+									<IconButton
+										size="xs"
+										icon={<FaClipboard />}
+										aria-label="copy"
+										onClick={() =>
+											navigator.clipboard.writeText(accountActive?.id ?? "")
+										}
+									/>
+								</InputRightAddon>
+							</InputGroup>
 						</FormControl>
 
 						<Heading mb="4" color="secondary.600">
